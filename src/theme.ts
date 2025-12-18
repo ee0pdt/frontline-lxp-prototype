@@ -2,21 +2,28 @@ import type { LXPTheme } from './config'
 
 // Helper to darken a hex color by a percentage
 function darkenColor(hex: string, percent: number): string {
-  // Remove # if present
   const cleanHex = hex.replace('#', '')
-
-  // Parse RGB values
   const r = parseInt(cleanHex.substring(0, 2), 16)
   const g = parseInt(cleanHex.substring(2, 4), 16)
   const b = parseInt(cleanHex.substring(4, 6), 16)
 
-  // Darken each channel
   const darken = (value: number) => Math.max(0, Math.floor(value * (1 - percent / 100)))
-
-  // Convert back to hex
   const toHex = (value: number) => value.toString(16).padStart(2, '0')
 
   return `#${toHex(darken(r))}${toHex(darken(g))}${toHex(darken(b))}`
+}
+
+// Helper to lighten a hex color by a percentage
+function lightenColor(hex: string, percent: number): string {
+  const cleanHex = hex.replace('#', '')
+  const r = parseInt(cleanHex.substring(0, 2), 16)
+  const g = parseInt(cleanHex.substring(2, 4), 16)
+  const b = parseInt(cleanHex.substring(4, 6), 16)
+
+  const lighten = (value: number) => Math.min(255, Math.floor(value + (255 - value) * (percent / 100)))
+  const toHex = (value: number) => value.toString(16).padStart(2, '0')
+
+  return `#${toHex(lighten(r))}${toHex(lighten(g))}${toHex(lighten(b))}`
 }
 
 // Initialize theme from window.theme
@@ -28,11 +35,13 @@ export function initializeTheme(): void {
   if (theme.colorPrimary) {
     root.style.setProperty('--color-primary', theme.colorPrimary)
     root.style.setProperty('--color-primary-dark', darkenColor(theme.colorPrimary, 15))
+    root.style.setProperty('--color-primary-light', lightenColor(theme.colorPrimary, 25))
   }
 
   if (theme.colorSecondary) {
     root.style.setProperty('--color-secondary', theme.colorSecondary)
     root.style.setProperty('--color-secondary-dark', darkenColor(theme.colorSecondary, 15))
+    root.style.setProperty('--color-secondary-light', lightenColor(theme.colorSecondary, 25))
   }
 
   if (theme.colorButton) {
