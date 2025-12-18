@@ -205,6 +205,7 @@
 
 html {
   font-family: var(--font-family-display);
+  font-size: 16px; /* Explicit base size - prevents inheritance from parent containers */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--surface-secondary);
@@ -215,6 +216,7 @@ body {
   padding: 0;
   background-color: var(--surface-secondary);
   color: var(--text-primary);
+  font-size: 16px; /* Reinforce base size for embedded contexts */
   min-height: 100vh;
   min-height: 100dvh;
 }
@@ -227,6 +229,7 @@ body {
   flex-direction: column;
   width: 100%;
   background-color: var(--surface-secondary);
+  font-size: 16px; /* Ensure consistent sizing when embedded in Content Box */
 }
 
 /* ============================================

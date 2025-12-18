@@ -139,7 +139,24 @@
   });
 </script>
 
-<!-- Load the prototype app from GitHub Pages -->
-<!-- Load from GitHub Pages -->
-<script type="module" src="https://ee0pdt.github.io/frontline-lxp-prototype/frontline-app.js"></script>
-<link rel="stylesheet" href="https://ee0pdt.github.io/frontline-lxp-prototype/frontline-app.css">
+<!-- Load the prototype app from GitHub Pages with cache busting -->
+<script>
+  (function() {
+    var baseUrl = 'https://ee0pdt.github.io/frontline-lxp-prototype';
+    var cacheBuster = '?v=' + Date.now();
+
+    // Load CSS
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = baseUrl + '/frontline-app.css' + cacheBuster;
+    document.head.appendChild(link);
+
+    // Load JS module
+    var script = document.createElement('script');
+    script.type = 'module';
+    script.src = baseUrl + '/frontline-app.js' + cacheBuster;
+    document.body.appendChild(script);
+
+    console.log('[Frontline LXP] Loading assets with cache buster:', cacheBuster);
+  })();
+</script>
