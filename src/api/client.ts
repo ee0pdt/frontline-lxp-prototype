@@ -51,28 +51,28 @@ class ApiClient {
   async getMandatoryLearning(): Promise<Course[]> {
     if (isDev) return mockData.mandatoryLearning
 
-    const data = await this.fetch<{ data: unknown[] }>(
+    const data = await this.fetch<{ items: unknown[] }>(
       `/user-learning-activities/${config.userId}/mandatory?limit=10`
     )
-    return data.data.map(transformCourse)
+    return (data.items || []).map(transformCourse)
   }
 
   async getRecentLearning(): Promise<Course[]> {
     if (isDev) return mockData.recentLearning
 
-    const data = await this.fetch<{ data: unknown[] }>(
+    const data = await this.fetch<{ items: unknown[] }>(
       `/user-learning-activities/${config.userId}/recent?limit=5`
     )
-    return data.data.map(transformCourse)
+    return (data.items || []).map(transformCourse)
   }
 
   async getRecommendations(): Promise<Course[]> {
     if (isDev) return mockData.recommendations
 
-    const data = await this.fetch<{ data: unknown[] }>(
+    const data = await this.fetch<{ items: unknown[] }>(
       `/user-learning-activities/${config.userId}/recommendations?limit=10`
     )
-    return data.data.map(transformCourse)
+    return (data.items || []).map(transformCourse)
   }
 
   // Badges
@@ -129,18 +129,25 @@ function transformUser(data: unknown): User {
 
 function transformCourse(data: unknown): Course {
   const d = data as Record<string, unknown>
-  const dueDate = d.due_date as string | undefined
+  // API returns nested learning_activity object with course details
+  const la = (d.learning_activity || d) as Record<string, unknown>
+  const enrolment = d.enrolment as Record<string, unknown> | undefined
+
+  const dueDate = (d.due_date || enrolment?.due_date) as string | undefined
   const isOverdue = dueDate ? new Date(dueDate) < new Date() : false
 
+  // Calculate progress from enrolment if available
+  const progress = (d.progress || d.completion_percentage || 0) as number
+
   return {
-    id: d.id as number,
-    title: (d.title || d.name || 'Untitled') as string,
-    description: (d.description || '') as string,
-    image: d.image_url as string | undefined,
-    progress: (d.progress || d.completion_percentage || 0) as number,
+    id: (la.id || d.id) as number,
+    title: (la.name || la.title || d.title || 'Untitled') as string,
+    description: (la.description || d.description || '') as string,
+    image: (la.image_url || d.image_url) as string | undefined,
+    progress,
     dueDate,
     isOverdue,
-    estimatedMinutes: d.estimated_duration as number | undefined,
+    estimatedMinutes: (la.duration_minutes || d.estimated_duration) as number | undefined,
     type: 'mandatory',
   }
 }
