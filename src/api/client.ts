@@ -13,12 +13,21 @@ class ApiClient {
   private async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`
 
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+
+    // Only include Authorization header if we have a real token
+    // When running inside the LXP, cookie-based auth is used instead
+    if (this.token && this.token !== 'dev-token') {
+      headers['Authorization'] = `Bearer ${this.token}`
+    }
+
     const response = await fetch(url, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${this.token}`,
+        ...headers,
         ...options?.headers,
       },
     })
