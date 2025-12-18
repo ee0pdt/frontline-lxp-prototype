@@ -3,15 +3,25 @@ import type { Course, Badge, TeamMember, TeamStats, User, CourseObject } from '.
 
 class ApiClient {
   private baseUrl: string
+  private lxpApiBase: string
   private token: string
 
   constructor() {
     this.baseUrl = config.apiBase
+    this.lxpApiBase = config.lxpApiBase
     this.token = config.token
   }
 
   private async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const url = `${this.baseUrl}${endpoint}`
+    return this.fetchFromBase<T>(this.baseUrl, endpoint, options)
+  }
+
+  private async fetchLxp<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    return this.fetchFromBase<T>(this.lxpApiBase, endpoint, options)
+  }
+
+  private async fetchFromBase<T>(baseUrl: string, endpoint: string, options?: RequestInit): Promise<T> {
+    const url = `${baseUrl}${endpoint}`
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -114,7 +124,7 @@ class ApiClient {
     return data.data
   }
 
-  // Get course objects (content items)
+  // Get course objects (content items) - uses legacy LXP API
   async getCourseObjects(courseId: number, levelId?: number): Promise<CourseObject[]> {
     if (isDev) return mockData.courseObjects
 
@@ -123,7 +133,7 @@ class ApiClient {
       endpoint += `&level=${levelId}`
     }
 
-    const data = await this.fetch<{ results: unknown[] }>(endpoint)
+    const data = await this.fetchLxp<{ results: unknown[] }>(endpoint)
     return (data.results || []).map(transformCourseObject)
   }
 }

@@ -10,6 +10,7 @@ interface FrontlineConfig {
   orgId: number
   orgAlias: string
   apiBase: string
+  lxpApiBase: string // Legacy LXP API (without /lxp/ prefix)
 }
 
 export interface LXPTheme {
@@ -49,6 +50,7 @@ const devConfig: FrontlineConfig = {
   orgId: 1,
   orgAlias: 'petedev',
   apiBase: 'http://petedev.curatr3.com/lxp/api/v1',
+  lxpApiBase: 'http://petedev.curatr3.com/api/v1', // Legacy API without /lxp/ prefix
 }
 
 // Get config from Content Box injection or use dev defaults
@@ -60,6 +62,7 @@ export const config: FrontlineConfig = window.FRONTLINE_CONFIG || {
   orgId: window.ORG_ID || devConfig.orgId,
   orgAlias: window.ORG_ALIAS || devConfig.orgAlias,
   apiBase: devConfig.apiBase,
+  lxpApiBase: devConfig.lxpApiBase,
 }
 
 export const isDev = !window.FRONTLINE_CONFIG && !window.BEARER_TOKEN
