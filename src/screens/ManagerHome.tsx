@@ -42,9 +42,9 @@ export function ManagerHome() {
   }
 
   return (
-    <div className="flex-1 pb-20">
+    <div className="flex-1 flex flex-col bg-[var(--surface-secondary)]">
       {/* Header */}
-      <div className="bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-dark)] text-white px-4 py-4">
+      <div className="bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-dark)] text-white px-4 py-4 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-lg font-bold">Team Overview</h1>
@@ -60,110 +60,113 @@ export function ManagerHome() {
         </div>
       </div>
 
-      <div className="px-4 py-4 space-y-4">
-        {/* Team Stats Summary */}
-        <div className="card flex items-center gap-4 p-4">
-          <ProgressRing
-            progress={teamStats.compliancePercent}
-            size={72}
-            strokeWidth={7}
-            color={getComplianceColor(teamStats.compliancePercent)}
-          >
-            <div className="text-center">
-              <span
-                className="text-lg font-extrabold"
-                style={{ color: getComplianceColor(teamStats.compliancePercent) }}
-              >
-                {teamStats.compliancePercent}%
-              </span>
-            </div>
-          </ProgressRing>
-
-          <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-[var(--text-primary)] text-base mb-2">
-              Team Compliance
-            </h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-              <div>
-                <span className="text-[var(--text-muted)] text-xs">Avg Streak</span>
-                <p className="font-bold text-orange-500 flex items-center gap-1 text-sm">
-                  <span className="text-sm">🔥</span> {teamStats.averageStreak.toFixed(1)}d
-                </p>
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto bg-[var(--surface-secondary)]">
+        <div className="px-4 py-4 pb-24 space-y-4">
+          {/* Team Stats Summary */}
+          <div className="card flex items-center gap-4 p-4">
+            <ProgressRing
+              progress={teamStats.compliancePercent}
+              size={72}
+              strokeWidth={7}
+              color={getComplianceColor(teamStats.compliancePercent)}
+            >
+              <div className="text-center">
+                <span
+                  className="text-lg font-extrabold"
+                  style={{ color: getComplianceColor(teamStats.compliancePercent) }}
+                >
+                  {teamStats.compliancePercent}%
+                </span>
               </div>
-              <div>
-                <span className="text-[var(--text-muted)] text-xs">This Week</span>
-                <p className="font-bold text-[var(--color-primary)] text-sm">
-                  {teamStats.completedThisWeek} done
-                </p>
+            </ProgressRing>
+
+            <div className="flex-1 min-w-0">
+              <h3 className="font-bold text-[var(--text-primary)] text-base mb-2">
+                Team Compliance
+              </h3>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                <div>
+                  <span className="text-[var(--text-muted)] text-xs">Avg Streak</span>
+                  <p className="font-bold text-orange-500 flex items-center gap-1 text-sm">
+                    <span className="text-sm">🔥</span> {teamStats.averageStreak.toFixed(1)}d
+                  </p>
+                </div>
+                <div>
+                  <span className="text-[var(--text-muted)] text-xs">This Week</span>
+                  <p className="font-bold text-[var(--color-primary)] text-sm">
+                    {teamStats.completedThisWeek} done
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Needs Attention Section */}
-        {needsAttentionCount > 0 && (
+          {/* Needs Attention Section */}
+          {needsAttentionCount > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center">
+                  <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <h2 className="text-sm font-bold text-amber-600">
+                  Needs Attention ({needsAttentionCount})
+                </h2>
+              </div>
+              <div className="space-y-2">
+                {needsAttention.map((member) => (
+                  <TeamMemberCard
+                    key={member.id}
+                    member={member}
+                    onRemind={() => handleRemind(member.id)}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* On Track Section */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center">
-                <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              <div className="w-6 h-6 bg-[var(--color-primary)]/20 rounded-full flex items-center justify-center">
+                <svg className="w-3.5 h-3.5 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-sm font-bold text-amber-600">
-                Needs Attention ({needsAttentionCount})
+              <h2 className="text-sm font-bold text-[var(--text-primary)]">
+                On Track ({onTrack.length})
               </h2>
             </div>
             <div className="space-y-2">
-              {needsAttention.map((member) => (
-                <TeamMemberCard
-                  key={member.id}
-                  member={member}
-                  onRemind={() => handleRemind(member.id)}
-                />
-              ))}
+              {onTrack.length === 0 ? (
+                <div className="card text-center py-6">
+                  <p className="text-[var(--text-muted)] text-sm">Everyone needs a little help right now</p>
+                </div>
+              ) : (
+                onTrack.map((member) => (
+                  <TeamMemberCard key={member.id} member={member} />
+                ))
+              )}
             </div>
           </div>
-        )}
 
-        {/* On Track Section */}
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 bg-[var(--color-primary)]/20 rounded-full flex items-center justify-center">
-              <svg className="w-3.5 h-3.5 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 gap-3">
+            <button className="card card-interactive bg-[var(--color-secondary)] text-white p-4 text-center border-0 shadow-lg">
+              <svg className="w-6 h-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
-            </div>
-            <h2 className="text-sm font-bold text-[var(--text-primary)]">
-              On Track ({onTrack.length})
-            </h2>
+              <span className="font-bold text-sm">Full Report</span>
+            </button>
+            <button className="card card-interactive bg-[var(--color-accent)] text-white p-4 text-center border-0 shadow-lg">
+              <svg className="w-6 h-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+              <span className="font-bold text-sm">Announce</span>
+            </button>
           </div>
-          <div className="space-y-2">
-            {onTrack.length === 0 ? (
-              <div className="card text-center py-6">
-                <p className="text-[var(--text-muted)] text-sm">Everyone needs a little help right now</p>
-              </div>
-            ) : (
-              onTrack.map((member) => (
-                <TeamMemberCard key={member.id} member={member} />
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <button className="card card-interactive bg-[var(--color-secondary)] text-white p-4 text-center border-0">
-            <svg className="w-6 h-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            <span className="font-bold text-sm">Full Report</span>
-          </button>
-          <button className="card card-interactive bg-[var(--color-accent)] text-white p-4 text-center border-0">
-            <svg className="w-6 h-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-            </svg>
-            <span className="font-bold text-sm">Announce</span>
-          </button>
         </div>
       </div>
     </div>
