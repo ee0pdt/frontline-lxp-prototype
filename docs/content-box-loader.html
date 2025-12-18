@@ -1,0 +1,82 @@
+<!--
+  Frontline LXP Prototype - Content Box Loader
+
+  Copy this entire content into an LXP Content Block to load the prototype.
+
+  INSTRUCTIONS:
+  1. Go to Admin > Customisable Dashboard
+  2. Add a new Content Block
+  3. Switch to "Raw Editor" mode
+  4. Paste this entire content
+  5. Save and preview
+
+  IMPORTANT: Replace YOUR_GITHUB_USERNAME with your actual GitHub username
+  after deploying the repository to GitHub Pages.
+-->
+
+<style>
+  /* Hide any existing dashboard content when prototype is loaded */
+  #frontline-app ~ * {
+    display: none !important;
+  }
+
+  /* Ensure the app takes full height */
+  #frontline-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<div id="frontline-app">
+  <!-- Loading state while app loads -->
+  <div id="frontline-loading" style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Nunito', system-ui, sans-serif;
+    background: #F7F7F7;
+  ">
+    <div style="
+      width: 48px;
+      height: 48px;
+      border: 4px solid #58CC02;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    "></div>
+    <p style="margin-top: 16px; color: #777; font-weight: 600;">Loading Frontline LXP...</p>
+  </div>
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</div>
+
+<script>
+  // Pass LXP context to the prototype
+  window.FRONTLINE_CONFIG = {
+    userId: window.USER_ID,
+    userName: window.USER_NAME || window.USER_FIRST_NAME + ' ' + window.USER_LAST_NAME,
+    userEmail: window.USER_EMAIL || window.EMAIL,
+    token: window.BEARER_TOKEN,
+    orgId: window.ORG_ID,
+    orgAlias: window.ORG_ALIAS,
+    apiBase: window.location.origin + '/lxp/api/v1'
+  };
+
+  console.log('[Frontline LXP] Config loaded:', {
+    userId: window.FRONTLINE_CONFIG.userId,
+    userName: window.FRONTLINE_CONFIG.userName,
+    orgAlias: window.FRONTLINE_CONFIG.orgAlias,
+    hasToken: !!window.FRONTLINE_CONFIG.token
+  });
+</script>
+
+<!-- Load the prototype app from GitHub Pages -->
+<!-- REPLACE 'YOUR_GITHUB_USERNAME' with your actual GitHub username -->
+<script type="module" src="https://YOUR_GITHUB_USERNAME.github.io/frontline-lxp-prototype/frontline-app.js"></script>
+<link rel="stylesheet" href="https://YOUR_GITHUB_USERNAME.github.io/frontline-lxp-prototype/frontline-app.css">

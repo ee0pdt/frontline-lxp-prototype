@@ -1,0 +1,122 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+@theme {
+  /* Duolingo-inspired color palette */
+  --color-duo-green: #58CC02;
+  --color-duo-green-dark: #46A302;
+  --color-duo-green-light: #89E219;
+
+  --color-duo-blue: #1CB0F6;
+  --color-duo-blue-dark: #1899D6;
+
+  --color-duo-orange: #FF9600;
+  --color-duo-orange-dark: #E68A00;
+
+  --color-duo-red: #FF4B4B;
+  --color-duo-red-dark: #EA2B2B;
+
+  --color-duo-purple: #CE82FF;
+  --color-duo-gold: #FFC800;
+
+  /* Neutral palette */
+  --color-duo-gray-50: #F7F7F7;
+  --color-duo-gray-100: #E5E5E5;
+  --color-duo-gray-200: #CDCDCD;
+  --color-duo-gray-300: #AFAFAF;
+  --color-duo-gray-400: #777777;
+  --color-duo-gray-500: #4B4B4B;
+  --color-duo-gray-600: #3C3C3C;
+
+  /* Typography */
+  --font-family-display: 'Nunito', 'Poppins', system-ui, sans-serif;
+
+  /* Border radius */
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-button: 0 4px 0 var(--color-duo-green-dark);
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-family-display);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-duo-gray-50);
+  color: var(--color-duo-gray-500);
+  min-height: 100vh;
+}
+
+/* Mobile-first container */
+#root, #frontline-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Utility classes for Duolingo-style elements */
+.btn-primary {
+  background-color: var(--color-duo-green);
+  color: white;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--radius-button);
+  border: none;
+  box-shadow: 0 4px 0 var(--color-duo-green-dark);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+}
+
+/* Progress ring styles */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Streak flame animation */
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  50% { transform: scale(1.05) rotate(2deg); }
+}
+
+.flame-icon {
+  animation: flame-flicker 0.5s ease-in-out infinite;
+}
+
+/* Safe area padding for mobile */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
