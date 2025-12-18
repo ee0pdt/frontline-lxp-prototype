@@ -21,7 +21,7 @@ export function StreakDisplay({ compact = false }: StreakDisplayProps) {
       <div className="relative">
         <span className="text-4xl flame-icon">🔥</span>
         {streak.freezesRemaining > 0 && (
-          <span className="absolute -top-1 -right-1 bg-[var(--color-duo-blue)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+          <span className="absolute -top-1 -right-1 bg-[var(--color-secondary)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
             {streak.freezesRemaining}
           </span>
         )}

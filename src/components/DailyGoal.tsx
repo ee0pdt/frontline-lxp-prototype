@@ -13,7 +13,7 @@ export function DailyGoal() {
         progress={progress}
         size={100}
         strokeWidth={10}
-        color={dailyGoal.completed ? 'var(--color-duo-gold)' : 'var(--color-duo-green)'}
+        color={dailyGoal.completed ? 'var(--color-gold)' : 'var(--color-primary)'}
       >
         <div className="text-center">
           {dailyGoal.completed ? (
@@ -34,12 +34,12 @@ export function DailyGoal() {
           {dailyGoal.completed ? 'Goal Complete!' : 'Daily Goal'}
         </h3>
         {dailyGoal.completed ? (
-          <p className="text-sm text-[var(--color-duo-gold)] font-semibold">
+          <p className="text-sm text-[var(--color-gold)] font-semibold">
             You're on fire! 🔥 Keep the streak going tomorrow.
           </p>
         ) : (
           <p className="text-sm text-gray-500">
-            <span className="font-semibold text-[var(--color-duo-green)]">{remaining} XP</span> to reach your daily goal
+            <span className="font-semibold text-[var(--color-primary)]">{remaining} XP</span> to reach your daily goal
           </p>
         )}
 

@@ -7,9 +7,9 @@ interface TeamMemberCardProps {
 
 export function TeamMemberCard({ member, onRemind }: TeamMemberCardProps) {
   const getComplianceColor = (percent: number) => {
-    if (percent >= 80) return 'var(--color-duo-green)'
-    if (percent >= 50) return 'var(--color-duo-orange)'
-    return 'var(--color-duo-red)'
+    if (percent >= 80) return 'var(--color-primary)'
+    if (percent >= 50) return 'var(--color-warning)'
+    return 'var(--color-danger)'
   }
 
   const getInitials = (name: string) => {
@@ -32,7 +32,7 @@ export function TeamMemberCard({ member, onRemind }: TeamMemberCardProps) {
             className="w-12 h-12 rounded-full object-cover"
           />
         ) : (
-          <div className="w-12 h-12 rounded-full bg-[var(--color-duo-blue)] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-[var(--color-secondary)] flex items-center justify-center">
             <span className="text-white font-bold">{getInitials(member.name)}</span>
           </div>
         )}
@@ -73,7 +73,7 @@ export function TeamMemberCard({ member, onRemind }: TeamMemberCardProps) {
             cy="18"
             r="15"
             fill="none"
-            stroke="var(--color-duo-gray-100)"
+            stroke="var(--color-gray-100)"
             strokeWidth="3"
           />
           <circle
@@ -93,7 +93,7 @@ export function TeamMemberCard({ member, onRemind }: TeamMemberCardProps) {
       {member.needsAttention && onRemind && (
         <button
           onClick={onRemind}
-          className="px-3 py-1.5 bg-[var(--color-duo-orange)] text-white text-xs font-semibold rounded-lg"
+          className="px-3 py-1.5 bg-[var(--color-warning)] text-white text-xs font-semibold rounded-lg"
         >
           Nudge
         </button>

@@ -93,12 +93,12 @@ export function LearnerHome() {
         </div>
 
         {/* Quick action */}
-        <div className="card bg-gradient-to-r from-[var(--color-duo-green)] to-[var(--color-duo-green-light)] text-white p-6">
+        <div className="card bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white p-6">
           <h3 className="font-bold text-lg mb-2">Quick Boost</h3>
           <p className="text-sm opacity-90 mb-4">
             Earn 10 XP with a 2-minute micro-lesson
           </p>
-          <button className="bg-white text-[var(--color-duo-green)] font-bold px-4 py-2 rounded-xl">
+          <button className="bg-white text-[var(--color-primary)] font-bold px-4 py-2 rounded-xl">
             Start Now →
           </button>
         </div>

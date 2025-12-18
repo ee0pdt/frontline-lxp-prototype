@@ -31,9 +31,9 @@ export function ManagerHome() {
   const onTrack = team.filter((m) => !m.needsAttention)
 
   const getComplianceColor = (percent: number) => {
-    if (percent >= 80) return 'var(--color-duo-green)'
-    if (percent >= 50) return 'var(--color-duo-orange)'
-    return 'var(--color-duo-red)'
+    if (percent >= 80) return 'var(--color-primary)'
+    if (percent >= 50) return 'var(--color-warning)'
+    return 'var(--color-danger)'
   }
 
   const handleRemind = (memberId: number) => {
@@ -45,7 +45,7 @@ export function ManagerHome() {
   return (
     <div className="flex-1 pb-20">
       {/* Header */}
-      <div className="bg-[var(--color-duo-blue)] text-white px-4 py-6 mb-4">
+      <div className="bg-[var(--color-secondary)] text-white px-4 py-6 mb-4">
         <h1 className="text-xl font-bold">Team Overview</h1>
         <p className="text-sm opacity-80 mt-1">
           {teamStats.totalMembers} team members
@@ -84,7 +84,7 @@ export function ManagerHome() {
               </div>
               <div>
                 <span className="text-gray-400">This Week</span>
-                <p className="font-semibold text-[var(--color-duo-green)]">
+                <p className="font-semibold text-[var(--color-primary)]">
                   {teamStats.completedThisWeek} completed
                 </p>
               </div>
@@ -136,11 +136,11 @@ export function ManagerHome() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-3">
-          <button className="card bg-[var(--color-duo-blue)] text-white p-4 text-center">
+          <button className="card bg-[var(--color-secondary)] text-white p-4 text-center">
             <span className="text-2xl block mb-2">📊</span>
             <span className="font-semibold text-sm">Full Report</span>
           </button>
-          <button className="card bg-[var(--color-duo-purple)] text-white p-4 text-center">
+          <button className="card bg-[var(--color-accent)] text-white p-4 text-center">
             <span className="text-2xl block mb-2">📢</span>
             <span className="font-semibold text-sm">Team Announcement</span>
           </button>

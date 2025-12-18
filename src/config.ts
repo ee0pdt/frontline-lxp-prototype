@@ -12,6 +12,21 @@ interface FrontlineConfig {
   apiBase: string
 }
 
+export interface LXPTheme {
+  colorButton?: string
+  colorButtonText?: string
+  colorFocus?: string
+  colorPrimary?: string
+  colorPrimaryText?: string
+  colorSecondary?: string
+  colorSecondaryText?: string
+  direction?: 'ltr' | 'rtl'
+  fontFamily?: string
+  navBarBg?: string
+  radiusMedium?: string
+  shadowMedium?: string
+}
+
 declare global {
   interface Window {
     FRONTLINE_CONFIG?: FrontlineConfig
@@ -21,6 +36,7 @@ declare global {
     BEARER_TOKEN?: string
     ORG_ID?: number
     ORG_ALIAS?: string
+    theme?: LXPTheme
   }
 }
 

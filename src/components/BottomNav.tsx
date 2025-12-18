@@ -31,7 +31,7 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
             onClick={() => handleClick(item.id)}
             className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
               active === item.id
-                ? 'text-[var(--color-duo-green)]'
+                ? 'text-[var(--color-primary)]'
                 : 'text-gray-400 hover:text-gray-600'
             }`}
           >
@@ -39,7 +39,7 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
               {active === item.id ? item.activeIcon : item.icon}
             </span>
             <span className={`text-xs font-semibold ${
-              active === item.id ? 'text-[var(--color-duo-green)]' : ''
+              active === item.id ? 'text-[var(--color-primary)]' : ''
             }`}>
               {item.label}
             </span>

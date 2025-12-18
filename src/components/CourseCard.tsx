@@ -24,7 +24,7 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
     <div className={`card overflow-hidden ${course.isOverdue ? 'ring-2 ring-red-300' : ''}`}>
       <div className="flex gap-4">
         {/* Course image placeholder */}
-        <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[var(--color-duo-green-light)] to-[var(--color-duo-green)] flex items-center justify-center flex-shrink-0">
+        <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[var(--color-primary-light)] to-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
           <span className="text-3xl">📖</span>
         </div>
 
@@ -46,7 +46,7 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
           <div className="flex items-center gap-3">
             <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-[var(--color-duo-green)] rounded-full transition-all duration-500"
+                className="h-full bg-[var(--color-primary)] rounded-full transition-all duration-500"
                 style={{ width: `${course.progress}%` }}
               />
             </div>

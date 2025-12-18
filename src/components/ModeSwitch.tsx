@@ -12,7 +12,7 @@ export function ModeSwitch() {
           onClick={() => setMode('learner')}
           className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
             mode === 'learner'
-              ? 'bg-[var(--color-duo-green)] text-white shadow-sm'
+              ? 'bg-[var(--color-primary)] text-white shadow-sm'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -22,7 +22,7 @@ export function ModeSwitch() {
           onClick={() => setMode('manager')}
           className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
             mode === 'manager'
-              ? 'bg-[var(--color-duo-blue)] text-white shadow-sm'
+              ? 'bg-[var(--color-secondary)] text-white shadow-sm'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >

@@ -23,7 +23,7 @@ function App() {
   }, [setUser])
 
   return (
-    <div className="min-h-screen bg-[var(--color-duo-gray-50)] flex flex-col max-w-lg mx-auto">
+    <div className="min-h-screen bg-[var(--color-gray-50)] flex flex-col max-w-lg mx-auto">
       {/* Mode Switcher (only for managers) */}
       <ModeSwitch />
 
@@ -31,7 +31,7 @@ function App() {
       {isLoading && (
         <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50">
           <div className="text-center">
-            <div className="w-12 h-12 border-4 border-[var(--color-duo-green)] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <div className="w-12 h-12 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
             <p className="text-sm text-gray-500 font-semibold">Loading...</p>
           </div>
         </div>
