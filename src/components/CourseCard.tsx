@@ -24,7 +24,7 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
     <div
       className={`card overflow-hidden ${course.isOverdue ? 'ring-2 ring-red-400/50' : ''}`}
     >
-      <div className="flex gap-4">
+      <div className="flex gap-3">
         {/* Course image */}
         {course.image ? (
           <img
@@ -40,8 +40,8 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
 
         <div className="flex-1 min-w-0">
           {/* Title and due date */}
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-bold text-[var(--text-primary)] text-[15px] leading-tight line-clamp-2">{course.title}</h3>
+          <div className="flex items-start justify-between gap-2 mb-1">
+            <h3 className="font-bold text-[var(--text-primary)] text-[15px] leading-tight truncate">{course.title}</h3>
             {dueLabel && (
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0 ${dueLabel.color}`}>
                 {dueLabel.text}
@@ -49,29 +49,26 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
             )}
           </div>
 
-          {/* Progress section with improved padding */}
-          <div className="bg-[var(--surface-tertiary)] rounded-lg p-3 mt-2">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-[var(--text-tertiary)]">Progress</span>
-              <span className="text-xs font-bold text-[var(--text-primary)]">
-                {course.progress}%
-              </span>
-            </div>
-            <div className="h-2 bg-[var(--progress-bg)] rounded-full overflow-hidden">
+          {/* Progress bar - simple inline style */}
+          <div className="flex items-center gap-2 mt-2">
+            <div className="flex-1 h-1.5 bg-[var(--progress-bg)] rounded-full overflow-hidden">
               <div
                 className="h-full bg-[var(--color-primary)] rounded-full transition-all duration-500"
                 style={{ width: `${course.progress}%` }}
               />
             </div>
+            <span className="text-xs font-bold text-[var(--text-tertiary)] w-9 text-right">
+              {course.progress}%
+            </span>
           </div>
 
           {/* Time estimate */}
           {course.estimatedMinutes && (
-            <p className="text-[11px] text-[var(--text-muted)] mt-2 flex items-center gap-1">
+            <p className="text-[11px] text-[var(--text-muted)] mt-1.5 flex items-center gap-1">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>{course.estimatedMinutes} min remaining</span>
+              <span>{course.estimatedMinutes} min</span>
             </p>
           )}
         </div>
@@ -80,7 +77,7 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
       {/* Action button */}
       <button
         onClick={onContinue}
-        className="w-full mt-4 btn-primary text-sm py-3"
+        className="w-full mt-3 btn-primary text-sm py-3"
       >
         {course.progress > 0 ? 'Continue' : 'Start'}
       </button>

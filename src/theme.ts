@@ -69,9 +69,8 @@ export function initializeTheme(): void {
     root.style.setProperty('--color-nav-bg', theme.navBarBg)
   }
 
-  if (theme.fontFamily) {
-    root.style.setProperty('--font-family-display', theme.fontFamily)
-  }
+  // NOTE: We intentionally DO NOT use theme.fontFamily
+  // We always use Nunito for consistent branding
 
   if (theme.radiusMedium) {
     root.style.setProperty('--radius-button', theme.radiusMedium)
