@@ -23,10 +23,18 @@ export function CourseCard({ course, onContinue }: CourseCardProps) {
   return (
     <div className={`card overflow-hidden ${course.isOverdue ? 'ring-2 ring-red-300' : ''}`}>
       <div className="flex gap-4">
-        {/* Course image placeholder */}
-        <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[var(--color-primary-light)] to-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
-          <span className="text-3xl">📖</span>
-        </div>
+        {/* Course image */}
+        {course.image ? (
+          <img
+            src={course.image}
+            alt={course.title}
+            className="w-20 h-20 rounded-xl object-cover flex-shrink-0"
+          />
+        ) : (
+          <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-[var(--color-primary-light)] to-[var(--color-primary)] flex items-center justify-center flex-shrink-0">
+            <span className="text-3xl">📖</span>
+          </div>
+        )}
 
         <div className="flex-1 min-w-0">
           {/* Title and due date */}
