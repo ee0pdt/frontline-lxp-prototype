@@ -53,16 +53,31 @@ const devConfig: FrontlineConfig = {
   lxpApiBase: 'http://petedev.curatr3.com/api/v1', // Legacy API without /lxp/ prefix
 }
 
-// Get config from Content Box injection or use dev defaults
-export const config: FrontlineConfig = window.FRONTLINE_CONFIG || {
-  userId: window.USER_ID || devConfig.userId,
-  userName: window.USER_NAME || devConfig.userName,
-  userEmail: window.USER_EMAIL || devConfig.userEmail,
-  token: window.BEARER_TOKEN || devConfig.token,
-  orgId: window.ORG_ID || devConfig.orgId,
-  orgAlias: window.ORG_ALIAS || devConfig.orgAlias,
-  apiBase: devConfig.apiBase,
-  lxpApiBase: devConfig.lxpApiBase,
+// Derive LXP API base from page origin (for when running embedded in LXP)
+function getLxpApiBase(): string {
+  // In dev, use the dev config
+  if (!window.FRONTLINE_CONFIG && !window.BEARER_TOKEN) {
+    return devConfig.lxpApiBase
+  }
+  // In production, derive from current page origin
+  return `${window.location.origin}/api/v1`
 }
+
+// Get config from Content Box injection or use dev defaults
+export const config: FrontlineConfig = window.FRONTLINE_CONFIG
+  ? {
+      ...window.FRONTLINE_CONFIG,
+      lxpApiBase: window.FRONTLINE_CONFIG.lxpApiBase || getLxpApiBase(),
+    }
+  : {
+      userId: window.USER_ID || devConfig.userId,
+      userName: window.USER_NAME || devConfig.userName,
+      userEmail: window.USER_EMAIL || devConfig.userEmail,
+      token: window.BEARER_TOKEN || devConfig.token,
+      orgId: window.ORG_ID || devConfig.orgId,
+      orgAlias: window.ORG_ALIAS || devConfig.orgAlias,
+      apiBase: devConfig.apiBase,
+      lxpApiBase: getLxpApiBase(),
+    }
 
 export const isDev = !window.FRONTLINE_CONFIG && !window.BEARER_TOKEN
