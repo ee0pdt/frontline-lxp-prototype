@@ -1,5 +1,5 @@
 import { config, isDev } from '../config'
-import type { Course, Badge, TeamMember, TeamStats, User } from '../store'
+import type { Course, Badge, TeamMember, TeamStats, User, CourseObject } from '../store'
 
 class ApiClient {
   private baseUrl: string
@@ -113,6 +113,19 @@ class ApiClient {
     )
     return data.data
   }
+
+  // Get course objects (content items)
+  async getCourseObjects(courseId: number, levelId?: number): Promise<CourseObject[]> {
+    if (isDev) return mockData.courseObjects
+
+    let endpoint = `/courses/${courseId}/objects?ordering=created&group_id=0&filter=all&per_page=20`
+    if (levelId) {
+      endpoint += `&level=${levelId}`
+    }
+
+    const data = await this.fetch<{ results: unknown[] }>(endpoint)
+    return (data.results || []).map(transformCourseObject)
+  }
 }
 
 // Transform functions (map API response to our types)
@@ -184,6 +197,28 @@ function transformTeamStats(data: unknown): TeamStats {
     compliancePercent: (d.compliance_percentage || d.avg_completion || 0) as number,
     averageStreak: (d.average_streak || 0) as number,
     completedThisWeek: (d.completed_this_week || 0) as number,
+  }
+}
+
+function transformCourseObject(data: unknown): CourseObject {
+  const d = data as Record<string, unknown>
+  const resource = d.resource as Record<string, unknown> | undefined
+
+  return {
+    id: d.id as number,
+    name: (d.name || 'Untitled') as string,
+    description: (d.description || '') as string,
+    imageUrl: (d.image_url || d.square_image_url) as string | undefined,
+    completed: Boolean(d.completed),
+    type: (resource?.human_type || 'Content') as string,
+    resource: {
+      id: (resource?.id || 0) as number,
+      type: String(resource?.type || 0),
+      humanType: (resource?.human_type || 'Content') as string,
+      content: (resource?.content || '') as string,
+    },
+    xp: (d.view_xp || d.target_xp || 1) as number,
+    viewTime: (d.view_time || 1) as number,
   }
 }
 
@@ -292,6 +327,56 @@ const mockData = {
     averageStreak: 5.2,
     completedThisWeek: 12,
   },
+  courseObjects: [
+    {
+      id: 1,
+      name: 'Introduction to Food Safety',
+      description: 'Learn the basics of food safety and why it matters in your daily work.',
+      imageUrl: undefined,
+      completed: true,
+      type: 'YouTube',
+      resource: {
+        id: 101,
+        type: '10',
+        humanType: 'YouTube',
+        content: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" frameborder="0" allowfullscreen></iframe>',
+      },
+      xp: 5,
+      viewTime: 5,
+    },
+    {
+      id: 2,
+      name: 'Proper Hand Washing Techniques',
+      description: 'Step-by-step guide to effective hand washing procedures.',
+      imageUrl: undefined,
+      completed: false,
+      type: 'URL',
+      resource: {
+        id: 102,
+        type: '1',
+        humanType: 'URL',
+        content: 'https://www.cdc.gov/handwashing/',
+      },
+      xp: 3,
+      viewTime: 3,
+    },
+    {
+      id: 3,
+      name: 'Temperature Control Quiz',
+      description: 'Test your knowledge of safe food temperatures.',
+      imageUrl: undefined,
+      completed: false,
+      type: 'Content',
+      resource: {
+        id: 103,
+        type: '5',
+        humanType: 'Quiz',
+        content: '',
+      },
+      xp: 10,
+      viewTime: 10,
+    },
+  ],
 }
 
 export const api = new ApiClient()

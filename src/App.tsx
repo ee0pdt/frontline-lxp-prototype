@@ -5,9 +5,10 @@ import { ModeSwitch } from './components/ModeSwitch'
 import { BottomNav } from './components/BottomNav'
 import { LearnerHome } from './screens/LearnerHome'
 import { ManagerHome } from './screens/ManagerHome'
+import { CourseContent } from './screens/CourseContent'
 
 function App() {
-  const { mode, setUser, isLoading } = useStore()
+  const { mode, currentScreen, setUser, isLoading } = useStore()
 
   // Load user data on mount
   useEffect(() => {
@@ -24,8 +25,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[var(--color-gray-50)] flex flex-col max-w-lg mx-auto">
-      {/* Mode Switcher (only for managers) */}
-      <ModeSwitch />
+      {/* Mode Switcher (only for managers, hidden during course content) */}
+      {currentScreen === 'home' && <ModeSwitch />}
 
       {/* Loading overlay */}
       {isLoading && (
@@ -39,11 +40,17 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1">
-        {mode === 'learner' ? <LearnerHome /> : <ManagerHome />}
+        {currentScreen === 'course-content' ? (
+          <CourseContent />
+        ) : mode === 'learner' ? (
+          <LearnerHome />
+        ) : (
+          <ManagerHome />
+        )}
       </main>
 
-      {/* Bottom Navigation */}
-      <BottomNav />
+      {/* Bottom Navigation - hide when viewing course content */}
+      {currentScreen === 'home' && <BottomNav />}
     </div>
   )
 }

@@ -1,11 +1,19 @@
 import { useEffect } from 'react'
 import { useStore } from '../store'
+import type { Course } from '../store'
 import { api } from '../api/client'
 import { DailyGoal } from '../components/DailyGoal'
 import { CourseCard } from '../components/CourseCard'
 
 export function LearnerHome() {
-  const { user, mandatoryLearning, setMandatoryLearning, setIsLoading, addXP } = useStore()
+  const {
+    user,
+    mandatoryLearning,
+    setMandatoryLearning,
+    setIsLoading,
+    setActiveCourse,
+    setCurrentScreen,
+  } = useStore()
 
   useEffect(() => {
     const loadData = async () => {
@@ -22,11 +30,9 @@ export function LearnerHome() {
     loadData()
   }, [setMandatoryLearning, setIsLoading])
 
-  const handleContinue = (courseId: number) => {
-    // In a real app, this would launch the course
-    console.log('Launching course:', courseId)
-    // Simulate earning XP for demo purposes
-    addXP(10)
+  const handleContinue = (course: Course) => {
+    setActiveCourse(course)
+    setCurrentScreen('course-content')
   }
 
   const overdueCount = mandatoryLearning.filter((c) => c.isOverdue).length
@@ -85,7 +91,7 @@ export function LearnerHome() {
                 <CourseCard
                   key={course.id}
                   course={course}
-                  onContinue={() => handleContinue(course.id)}
+                  onContinue={() => handleContinue(course)}
                 />
               ))
             )}
