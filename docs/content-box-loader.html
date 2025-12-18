@@ -15,16 +15,79 @@
 -->
 
 <style>
-  /* Hide any existing dashboard content when prototype is loaded */
-  #frontline-app ~ * {
+  /* Hide LXP page elements when prototype is loaded */
+
+  /* Hide common header/navigation elements */
+  header,
+  .header,
+  .site-header,
+  .main-header,
+  nav:not(#frontline-app nav),
+  .navbar,
+  .nav-bar,
+  .navigation,
+  .top-bar {
     display: none !important;
   }
 
-  /* Ensure the app takes full height */
+  /* Hide sidebar elements */
+  aside,
+  .sidebar,
+  .side-bar,
+  .left-sidebar,
+  .right-sidebar {
+    display: none !important;
+  }
+
+  /* Hide footer elements */
+  footer,
+  .footer,
+  .site-footer,
+  .main-footer {
+    display: none !important;
+  }
+
+  /* Hide any siblings of the app container */
+  #frontline-app ~ *,
+  #frontline-app ~ *::before,
+  #frontline-app ~ *::after {
+    display: none !important;
+  }
+
+  /* Hide previous siblings using :has() - modern browsers */
+  *:has(~ #frontline-app):not(script):not(style):not(link):not(#frontline-app) {
+    display: none !important;
+  }
+
+  /* Hide dashboard-specific content */
+  .dashboard,
+  .dashboard-content,
+  .dashboard-widgets,
+  .content-area:not(:has(#frontline-app)),
+  .main-content:not(:has(#frontline-app)) {
+    display: none !important;
+  }
+
+  /* Make app container break out of any parent constraints */
   #frontline-app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #F7F7F7 !important;
+    overflow-y: auto !important;
+  }
+
+  /* Prevent body scroll when app is loaded */
+  body:has(#frontline-app) {
+    overflow: hidden !important;
   }
 </style>
 
