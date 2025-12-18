@@ -9,9 +9,9 @@ export function StreakDisplay({ compact = false }: StreakDisplayProps) {
 
   if (compact) {
     return (
-      <div className="flex items-center gap-1 bg-orange-50 px-3 py-1.5 rounded-full">
-        <span className="text-lg flame-icon">🔥</span>
-        <span className="font-bold text-orange-500">{streak.current}</span>
+      <div className="flex items-center gap-1.5 bg-[var(--surface-tertiary)] px-3 py-1.5 rounded-full">
+        <span className="text-base flame-icon">🔥</span>
+        <span className="font-bold text-orange-500 text-sm">{streak.current}</span>
       </div>
     )
   }
@@ -31,10 +31,10 @@ export function StreakDisplay({ compact = false }: StreakDisplayProps) {
           <span className="text-3xl font-extrabold text-orange-500">
             {streak.current}
           </span>
-          <span className="text-gray-500 font-semibold">day streak</span>
+          <span className="text-[var(--text-secondary)] font-semibold">day streak</span>
         </div>
         {streak.longestStreak > 0 && streak.longestStreak > streak.current && (
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Best: {streak.longestStreak} days
           </p>
         )}
@@ -42,7 +42,7 @@ export function StreakDisplay({ compact = false }: StreakDisplayProps) {
       {streak.freezesRemaining > 0 && (
         <div className="text-center">
           <span className="text-2xl">🛡️</span>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             {streak.freezesRemaining} freeze{streak.freezesRemaining !== 1 ? 's' : ''}
           </p>
         </div>

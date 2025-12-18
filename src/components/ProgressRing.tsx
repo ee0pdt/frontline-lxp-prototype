@@ -12,7 +12,7 @@ export function ProgressRing({
   size = 120,
   strokeWidth = 10,
   color = 'var(--color-primary)',
-  bgColor = 'var(--color-gray-100)',
+  bgColor = 'var(--progress-bg)',
   children,
 }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2
@@ -20,7 +20,7 @@ export function ProgressRing({
   const strokeDashoffset = circumference - (progress / 100) * circumference
 
   return (
-    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <div className="relative inline-flex items-center justify-center flex-shrink-0" style={{ width: size, height: size }}>
       <svg
         className="progress-ring"
         width={size}

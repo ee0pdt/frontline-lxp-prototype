@@ -8,46 +8,48 @@ export function DailyGoal() {
   const remaining = Math.max(dailyGoal.targetXP - dailyGoal.currentXP, 0)
 
   return (
-    <div className="card flex items-center gap-6 p-6">
+    <div className="card flex items-center gap-4 p-4">
       <ProgressRing
         progress={progress}
-        size={100}
-        strokeWidth={10}
+        size={80}
+        strokeWidth={8}
         color={dailyGoal.completed ? 'var(--color-gold)' : 'var(--color-primary)'}
       >
         <div className="text-center">
           {dailyGoal.completed ? (
-            <span className="text-3xl">⭐</span>
+            <span className="text-2xl">⭐</span>
           ) : (
             <>
-              <span className="text-2xl font-extrabold text-gray-700">
+              <span className="text-xl font-extrabold text-[var(--text-primary)]">
                 {dailyGoal.currentXP}
               </span>
-              <span className="text-xs text-gray-400 block">XP</span>
+              <span className="text-[10px] text-[var(--text-muted)] block -mt-0.5">XP</span>
             </>
           )}
         </div>
       </ProgressRing>
 
-      <div className="flex-1">
-        <h3 className="font-bold text-gray-700 text-lg mb-1">
-          {dailyGoal.completed ? 'Goal Complete!' : 'Daily Goal'}
-        </h3>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="font-bold text-[var(--text-primary)] text-base">
+            {dailyGoal.completed ? 'Goal Complete!' : 'Daily Goal'}
+          </h3>
+          {/* Streak indicator - inline */}
+          <div className="flex items-center gap-1.5 bg-[var(--surface-tertiary)] px-2.5 py-1 rounded-full">
+            <span className="text-base flame-icon">🔥</span>
+            <span className="font-bold text-orange-500 text-sm">{streak.current}</span>
+          </div>
+        </div>
+
         {dailyGoal.completed ? (
-          <p className="text-sm text-[var(--color-gold)] font-semibold">
-            You're on fire! 🔥 Keep the streak going tomorrow.
+          <p className="text-sm text-[var(--color-gold)] font-semibold mt-1">
+            You're on fire! Keep the streak going tomorrow.
           </p>
         ) : (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-[var(--text-tertiary)] mt-1">
             <span className="font-semibold text-[var(--color-primary)]">{remaining} XP</span> to reach your daily goal
           </p>
         )}
-
-        {/* Streak indicator */}
-        <div className="flex items-center gap-2 mt-3">
-          <span className="text-xl flame-icon">🔥</span>
-          <span className="font-bold text-orange-500">{streak.current} day streak</span>
-        </div>
       </div>
     </div>
   )
