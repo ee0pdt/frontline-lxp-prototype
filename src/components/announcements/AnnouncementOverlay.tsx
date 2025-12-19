@@ -87,52 +87,55 @@ export function AnnouncementOverlay() {
   }
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[var(--color-secondary)] to-[var(--color-secondary-dark)] animate-scale-in">
-      {/* Safe area padding top */}
-      <div className="h-[env(safe-area-inset-top)]" />
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[var(--color-secondary)] to-[var(--color-secondary-dark)] animate-scale-in flex justify-center">
+      {/* Constrained width container for desktop */}
+      <div className="w-full max-w-md flex flex-col">
+        {/* Safe area padding top */}
+        <div className="h-[env(safe-area-inset-top)]" />
 
-      {/* Header */}
-      <div className="px-4 pt-4 pb-2">
-        {/* Story indicators */}
-        <StoryIndicators total={activeAnnouncements.length} current={announcementIndex} />
+        {/* Header */}
+        <div className="px-4 pt-4 pb-2">
+          {/* Story indicators */}
+          <StoryIndicators total={activeAnnouncements.length} current={announcementIndex} />
 
-        {/* Close button */}
-        <div className="flex justify-end mt-3">
-          <button
-            onClick={handleClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            aria-label="Close"
-          >
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          {/* Close button */}
+          <div className="flex justify-end mt-3">
+            <button
+              onClick={handleClose}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+              aria-label="Close"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Content area with touch/tap handlers */}
-      <div
-        className="flex-1 overflow-y-auto"
-        style={{ height: 'calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 120px)' }}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onClick={handleTapNavigation}
-      >
-        <AnnouncementSlide announcement={currentAnnouncement} />
-      </div>
+        {/* Content area with touch/tap handlers */}
+        <div
+          className="flex-1 overflow-y-auto"
+          style={{ height: 'calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 120px)' }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onClick={handleTapNavigation}
+        >
+          <AnnouncementSlide announcement={currentAnnouncement} />
+        </div>
 
-      {/* Footer with navigation hints and dismiss all */}
-      <div className="px-4 pb-4 mb-[env(safe-area-inset-bottom)]">
-        <div className="flex items-center justify-between text-white/60 text-xs">
-          <span>
-            {announcementIndex + 1} of {activeAnnouncements.length}
-          </span>
-          <button
-            onClick={handleDismissAll}
-            className="text-white/60 hover:text-white transition-colors"
-          >
-            Dismiss all
-          </button>
+        {/* Footer with navigation hints and dismiss all */}
+        <div className="px-4 pb-4 mb-[env(safe-area-inset-bottom)]">
+          <div className="flex items-center justify-between text-white/60 text-xs">
+            <span>
+              {announcementIndex + 1} of {activeAnnouncements.length}
+            </span>
+            <button
+              onClick={handleDismissAll}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              Dismiss all
+            </button>
+          </div>
         </div>
       </div>
     </div>

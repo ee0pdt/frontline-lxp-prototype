@@ -149,9 +149,11 @@ interface AppState {
   announcements: Announcement[]
   dismissedAnnouncementIds: number[]
   isAnnouncementOverlayOpen: boolean
+  isAnnouncementBannerDismissed: boolean
   announcementIndex: number
   setAnnouncements: (announcements: Announcement[]) => void
   dismissAnnouncement: (id: number) => void
+  dismissAnnouncementBanner: () => void
   openAnnouncementOverlay: () => void
   closeAnnouncementOverlay: () => void
   setAnnouncementIndex: (index: number) => void
@@ -247,13 +249,15 @@ export const useStore = create<AppState>()(
       announcements: [],
       dismissedAnnouncementIds: [],
       isAnnouncementOverlayOpen: false,
+      isAnnouncementBannerDismissed: false,
       announcementIndex: 0,
-      setAnnouncements: (announcements) => set({ announcements }),
+      setAnnouncements: (announcements) => set({ announcements, isAnnouncementBannerDismissed: false }),
       dismissAnnouncement: (id) =>
         set((state) => ({
           dismissedAnnouncementIds: [...state.dismissedAnnouncementIds, id],
         })),
-      openAnnouncementOverlay: () => set({ isAnnouncementOverlayOpen: true, announcementIndex: 0 }),
+      dismissAnnouncementBanner: () => set({ isAnnouncementBannerDismissed: true }),
+      openAnnouncementOverlay: () => set({ isAnnouncementOverlayOpen: true, isAnnouncementBannerDismissed: true, announcementIndex: 0 }),
       closeAnnouncementOverlay: () => set({ isAnnouncementOverlayOpen: false }),
       setAnnouncementIndex: (index) => set({ announcementIndex: index }),
       createAnnouncement: (data) =>
