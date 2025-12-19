@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useStore } from './store'
 import { api } from './api/client'
+import { isDev, getOrgLogo } from './config'
 import { ModeSwitch } from './components/ModeSwitch'
 import { BottomNav } from './components/BottomNav'
 import { LearnerHome } from './screens/LearnerHome'
@@ -9,6 +10,17 @@ import { CourseContent } from './screens/CourseContent'
 
 function App() {
   const { mode, currentScreen, setUser, isLoading } = useStore()
+  const [showSplash, setShowSplash] = useState(isDev)
+
+  // Hide splash screen after delay (dev mode only)
+  useEffect(() => {
+    if (showSplash) {
+      const timer = setTimeout(() => {
+        setShowSplash(false)
+      }, 1500)
+      return () => clearTimeout(timer)
+    }
+  }, [showSplash])
 
   // Load user data on mount
   useEffect(() => {
@@ -22,6 +34,23 @@ function App() {
     }
     loadUser()
   }, [setUser])
+
+  // Splash screen for dev mode
+  if (showSplash) {
+    return (
+      <div className="fixed inset-0 bg-[var(--surface-primary)] flex flex-col items-center justify-center z-[9999]">
+        <div className="animate-scale-in flex flex-col items-center">
+          <img
+            src={getOrgLogo()}
+            alt="Organization logo"
+            className="h-16 w-auto object-contain mb-6"
+          />
+          <div className="w-8 h-8 border-3 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
+          <p className="mt-4 text-sm text-[var(--text-tertiary)] font-medium">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="app-shell">

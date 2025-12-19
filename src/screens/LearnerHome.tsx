@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useStore } from '../store'
 import type { Course } from '../store'
 import { api } from '../api/client'
+import { getOrgLogo } from '../config'
 import { DailyGoal } from '../components/DailyGoal'
 import { CourseCard } from '../components/CourseCard'
 
@@ -58,13 +59,21 @@ export function LearnerHome() {
       {/* Compact Header */}
       <div className="bg-[var(--surface-primary)] px-4 py-3 border-b border-[var(--border-primary)] flex-shrink-0">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-bold text-[var(--text-primary)]">
-              Hi, {user.name.split(' ')[0]}!
-            </h1>
-            <p className="text-xs text-[var(--text-muted)]">
-              Ready to learn something new?
-            </p>
+          <div className="flex items-center gap-3">
+            {/* Organization Logo */}
+            <img
+              src={getOrgLogo()}
+              alt="Organization logo"
+              className="h-8 w-auto object-contain"
+            />
+            <div>
+              <h1 className="text-lg font-bold text-[var(--text-primary)]">
+                Hi, {user.name.split(' ')[0]}!
+              </h1>
+              <p className="text-xs text-[var(--text-muted)]">
+                Ready to learn something new?
+              </p>
+            </div>
           </div>
           {/* User avatar */}
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] flex items-center justify-center text-white font-bold text-sm">

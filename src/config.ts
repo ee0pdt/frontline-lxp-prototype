@@ -37,8 +37,18 @@ declare global {
     BEARER_TOKEN?: string
     ORG_ID?: number
     ORG_ALIAS?: string
+    ORG_LOGO?: string
     theme?: LXPTheme
   }
+}
+
+// Get organization logo - uses window.ORG_LOGO in production, M&S logo in dev
+export function getOrgLogo(): string {
+  if (window.ORG_LOGO) {
+    return window.ORG_LOGO
+  }
+  // Default to M&S logo for dev/demo
+  return '/frontline-lxp-prototype/ms-logo.svg'
 }
 
 // Development mock configuration
