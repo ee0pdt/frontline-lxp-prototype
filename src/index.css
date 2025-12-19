@@ -3,13 +3,14 @@
 
 @theme {
   /* Semantic colors - these can be overridden by window.theme */
-  --color-primary: #58CC02;
-  --color-primary-dark: #46A302;
-  --color-primary-light: #89E219;
+  /* M&S Theme: Sophisticated teal/green */
+  --color-primary: #0A4D3C;
+  --color-primary-dark: #083D30;
+  --color-primary-light: #0D6B53;
 
-  /* Secondary color for accents */
-  --color-secondary: #1CB0F6;
-  --color-secondary-dark: #1899D6;
+  /* Secondary color for accents - M&S black */
+  --color-secondary: #222222;
+  --color-secondary-dark: #1a1a1a;
 
   /* Button colors */
   --color-button: var(--color-primary);
@@ -23,14 +24,14 @@
   --color-nav-bg: #ffffff;
 
   /* Status colors */
-  --color-warning: #FF9600;
-  --color-warning-dark: #E68A00;
+  --color-warning: #D97706;
+  --color-warning-dark: #B45309;
 
-  --color-danger: #FF4B4B;
-  --color-danger-dark: #EA2B2B;
+  --color-danger: #DC2626;
+  --color-danger-dark: #B91C1C;
 
-  --color-accent: #CE82FF;
-  --color-gold: #FFC800;
+  --color-accent: #6B7280;
+  --color-gold: #B8860B;
 
   /* Neutral palette */
   --color-gray-50: #F7F7F7;
@@ -108,7 +109,7 @@
   --input-bg: #F7F7F7;
 
   /* Button glow */
-  --button-glow: rgba(88, 204, 2, 0.25);
+  --button-glow: rgba(10, 77, 60, 0.25);
 
   color-scheme: light;
 }
@@ -153,7 +154,7 @@
 
     --input-bg: #1E1E1E;
 
-    --button-glow: rgba(88, 204, 2, 0.2);
+    --button-glow: rgba(10, 77, 60, 0.2);
 
     --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
     --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -201,7 +202,7 @@
 
   --input-bg: #1E1E1E;
 
-  --button-glow: rgba(88, 204, 2, 0.2);
+  --button-glow: rgba(10, 77, 60, 0.2);
 
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -437,7 +438,7 @@ body {
   background: var(--card-bg-hover);
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-2px);
-  border-color: rgba(88, 204, 2, 0.15);
+  border-color: rgba(10, 77, 60, 0.15);
 }
 
 .card-interactive:active {
@@ -647,8 +648,8 @@ a:focus-visible {
 @media (min-width: 640px) {
   .app-shell {
     background:
-      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(88, 204, 2, 0.03) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(28, 176, 246, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(10, 77, 60, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(34, 34, 34, 0.03) 0%, transparent 50%),
       var(--surface-secondary);
   }
 }
@@ -657,8 +658,8 @@ a:focus-visible {
   @media (min-width: 640px) {
     :root:not([data-theme="light"]) .app-shell {
       background:
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(88, 204, 2, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(28, 176, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(10, 77, 60, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(34, 34, 34, 0.05) 0%, transparent 50%),
         var(--surface-secondary);
     }
   }
@@ -666,8 +667,8 @@ a:focus-visible {
 
 [data-theme="dark"] .app-shell {
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(88, 204, 2, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(28, 176, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(10, 77, 60, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(34, 34, 34, 0.05) 0%, transparent 50%),
     var(--surface-secondary);
 }
 
