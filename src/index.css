@@ -255,12 +255,12 @@ body {
   background: linear-gradient(180deg, var(--color-button) 0%, var(--color-button-dark) 100%);
   color: var(--color-button-text);
   font-weight: 600;
-  padding: 14px 28px;
+  padding: 12px 20px;
   border-radius: var(--radius-button);
   border: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  font-size: 15px;
+  font-size: 14px;
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-button), inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -339,12 +339,12 @@ body {
   background: linear-gradient(180deg, var(--color-danger) 0%, var(--color-danger-dark) 100%);
   color: #ffffff;
   font-weight: 600;
-  padding: 14px 28px;
+  padding: 12px 20px;
   border-radius: var(--radius-button);
   border: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  font-size: 15px;
+  font-size: 14px;
   position: relative;
   overflow: hidden;
   box-shadow:
@@ -381,12 +381,12 @@ body {
   background-color: var(--surface-tertiary);
   color: var(--text-secondary);
   font-weight: 600;
-  padding: 14px 28px;
+  padding: 12px 20px;
   border-radius: var(--radius-button);
   border: 1px solid var(--border-primary);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .btn-subtle:hover {
