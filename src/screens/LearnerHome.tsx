@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useStore } from '../store'
 import type { Course } from '../store'
 import { api } from '../api/client'
 import { getOrgLogo } from '../config'
 import { DailyGoal } from '../components/DailyGoal'
 import { CourseCard } from '../components/CourseCard'
+import { AnnouncementOverlay, StackedAvatars } from '../components/announcements'
 
 export function LearnerHome() {
   const {
@@ -14,14 +15,25 @@ export function LearnerHome() {
     setIsLoading,
     setActiveCourse,
     setCurrentScreen,
+    announcements,
+    dismissedAnnouncementIds,
+    isAnnouncementOverlayOpen,
+    setAnnouncements,
+    openAnnouncementOverlay,
   } = useStore()
+
+  const [hasAutoShown, setHasAutoShown] = useState(false)
 
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true)
       try {
-        const mandatory = await api.getMandatoryLearning()
+        const [mandatory, fetchedAnnouncements] = await Promise.all([
+          api.getMandatoryLearning(),
+          api.getAnnouncements(),
+        ])
         setMandatoryLearning(mandatory)
+        setAnnouncements(fetchedAnnouncements)
       } catch (error) {
         console.error('Failed to load learning data:', error)
       } finally {
@@ -29,7 +41,19 @@ export function LearnerHome() {
       }
     }
     loadData()
-  }, [setMandatoryLearning, setIsLoading])
+  }, [setMandatoryLearning, setAnnouncements, setIsLoading])
+
+  // Auto-show announcements overlay on first load if there are unread announcements
+  const activeAnnouncements = announcements.filter(
+    (a) => !dismissedAnnouncementIds.includes(a.id)
+  )
+
+  useEffect(() => {
+    if (!hasAutoShown && activeAnnouncements.length > 0) {
+      openAnnouncementOverlay()
+      setHasAutoShown(true)
+    }
+  }, [hasAutoShown, activeAnnouncements.length, openAnnouncementOverlay])
 
   const handleContinue = (course: Course) => {
     setActiveCourse(course)
@@ -66,6 +90,13 @@ export function LearnerHome() {
               alt="Organization logo"
               className="h-8 w-auto object-contain"
             />
+            {/* Stacked avatars for announcements */}
+            {activeAnnouncements.length > 0 && (
+              <StackedAvatars
+                announcements={activeAnnouncements}
+                onClick={openAnnouncementOverlay}
+              />
+            )}
             <div>
               <h1 className="text-lg font-bold text-[var(--text-primary)]">
                 Hi, {user.name.split(' ')[0]}!
@@ -158,6 +189,9 @@ export function LearnerHome() {
           </button>
         </div>
       </div>
+
+      {/* Announcement Stories Overlay */}
+      {isAnnouncementOverlayOpen && <AnnouncementOverlay />}
     </div>
   )
 }

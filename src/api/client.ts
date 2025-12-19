@@ -1,5 +1,5 @@
 import { config, isDev } from '../config'
-import type { Course, Badge, TeamMember, TeamStats, User, CourseObject } from '../store'
+import type { Course, Badge, TeamMember, TeamStats, User, CourseObject, Announcement } from '../store'
 
 class ApiClient {
   private baseUrl: string
@@ -136,6 +136,40 @@ class ApiClient {
     const data = await this.fetchLxp<{ results: unknown[] }>(endpoint)
     return (data.results || []).map(transformCourseObject)
   }
+
+  // Announcements
+  async getAnnouncements(): Promise<Announcement[]> {
+    if (isDev) return mockData.announcements
+
+    const data = await this.fetch<{ items: unknown[] }>(
+      `/users/${config.userId}/announcements`
+    )
+    return (data.items || []).map(transformAnnouncement)
+  }
+
+  async createAnnouncement(data: {
+    title: string
+    body: string
+    imageUrl?: string
+    ctaText?: string
+    ctaUrl?: string
+  }): Promise<Announcement> {
+    if (isDev) {
+      // For PoC, return mock response
+      return {
+        id: Date.now(),
+        ...data,
+        createdAt: new Date().toISOString(),
+        createdBy: mockData.user,
+      }
+    }
+
+    const response = await this.fetch<{ data: unknown }>('/announcements', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+    return transformAnnouncement(response.data)
+  }
 }
 
 // Transform functions (map API response to our types)
@@ -229,6 +263,26 @@ function transformCourseObject(data: unknown): CourseObject {
     },
     xp: (d.view_xp || d.target_xp || 1) as number,
     viewTime: (d.view_time || 1) as number,
+  }
+}
+
+function transformAnnouncement(data: unknown): Announcement {
+  const d = data as Record<string, unknown>
+  const creator = d.created_by as Record<string, unknown> | undefined
+
+  return {
+    id: d.id as number,
+    title: (d.title || '') as string,
+    body: (d.body || d.content || '') as string,
+    imageUrl: d.image_url as string | undefined,
+    ctaText: d.cta_text as string | undefined,
+    ctaUrl: d.cta_url as string | undefined,
+    createdAt: (d.created_at || new Date().toISOString()) as string,
+    createdBy: {
+      id: (creator?.id || 0) as number,
+      name: (creator?.full_name || creator?.name || 'Unknown') as string,
+      avatar: creator?.profile_pic_url as string | undefined,
+    },
   }
 }
 
@@ -443,6 +497,36 @@ const mockData = {
       },
       xp: 10,
       viewTime: 5,
+    },
+  ],
+  announcements: [
+    {
+      id: 1,
+      title: 'New Training Available!',
+      body: 'We\'ve just launched the new Customer Excellence course. Complete it by end of month to earn bonus XP and a special badge!',
+      imageUrl: 'https://images.unsplash.com/photo-1552581234-26160f608093?w=800&h=600&fit=crop',
+      ctaText: 'Start Course',
+      ctaUrl: '#',
+      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+      createdBy: { id: 1, name: 'Alex Johnson', avatar: undefined },
+    },
+    {
+      id: 2,
+      title: 'Team Meeting Friday',
+      body: 'Don\'t forget our monthly team check-in this Friday at 10am. We\'ll be discussing Q1 goals and celebrating our recent wins!',
+      imageUrl: undefined,
+      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      createdBy: { id: 1, name: 'Alex Johnson', avatar: undefined },
+    },
+    {
+      id: 3,
+      title: 'Holiday Schedule Update',
+      body: 'Please check the updated holiday rota for December. Make sure to submit any time-off requests by end of this week.',
+      imageUrl: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&h=600&fit=crop',
+      ctaText: 'View Schedule',
+      ctaUrl: '#',
+      createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
+      createdBy: { id: 7, name: 'Rachel Green', avatar: undefined },
     },
   ],
 }

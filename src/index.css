@@ -30,7 +30,7 @@
   --color-danger: #DC2626;
   --color-danger-dark: #B91C1C;
 
-  --color-accent: #6B7280;
+  --color-accent: #9333EA;
   --color-gold: #B8860B;
 
   /* Neutral palette */
@@ -547,6 +547,43 @@ body {
 
 .animate-scale-in {
   animation: scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   STORY AVATAR STYLES
+   ============================================ */
+
+/* Instagram-style gradient ring for story avatars */
+.story-avatar-ring {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+/* Pulse animation for new stories */
+@keyframes story-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(224, 62, 105, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(224, 62, 105, 0);
+  }
+}
+
+.story-pulse {
+  animation: story-pulse 2s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
 }
 
 /* ============================================

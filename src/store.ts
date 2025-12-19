@@ -73,6 +73,21 @@ export interface TeamMember {
   needsAttention: boolean
 }
 
+export interface Announcement {
+  id: number
+  title: string
+  body: string
+  imageUrl?: string
+  ctaText?: string
+  ctaUrl?: string
+  createdAt: string
+  createdBy: {
+    id: number
+    name: string
+    avatar?: string
+  }
+}
+
 export interface TeamStats {
   totalMembers: number
   compliancePercent: number
@@ -129,6 +144,18 @@ interface AppState {
   // Loading states
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
+
+  // Announcements
+  announcements: Announcement[]
+  dismissedAnnouncementIds: number[]
+  isAnnouncementOverlayOpen: boolean
+  announcementIndex: number
+  setAnnouncements: (announcements: Announcement[]) => void
+  dismissAnnouncement: (id: number) => void
+  openAnnouncementOverlay: () => void
+  closeAnnouncementOverlay: () => void
+  setAnnouncementIndex: (index: number) => void
+  createAnnouncement: (announcement: Omit<Announcement, 'id' | 'createdAt' | 'createdBy'>) => void
 }
 
 export const useStore = create<AppState>()(
@@ -215,6 +242,36 @@ export const useStore = create<AppState>()(
       // Loading
       isLoading: false,
       setIsLoading: (loading) => set({ isLoading: loading }),
+
+      // Announcements
+      announcements: [],
+      dismissedAnnouncementIds: [],
+      isAnnouncementOverlayOpen: false,
+      announcementIndex: 0,
+      setAnnouncements: (announcements) => set({ announcements }),
+      dismissAnnouncement: (id) =>
+        set((state) => ({
+          dismissedAnnouncementIds: [...state.dismissedAnnouncementIds, id],
+        })),
+      openAnnouncementOverlay: () => set({ isAnnouncementOverlayOpen: true, announcementIndex: 0 }),
+      closeAnnouncementOverlay: () => set({ isAnnouncementOverlayOpen: false }),
+      setAnnouncementIndex: (index) => set({ announcementIndex: index }),
+      createAnnouncement: (data) =>
+        set((state) => ({
+          announcements: [
+            {
+              ...data,
+              id: Date.now(),
+              createdAt: new Date().toISOString(),
+              createdBy: {
+                id: state.user.id,
+                name: state.user.name,
+                avatar: state.user.avatar,
+              },
+            },
+            ...state.announcements,
+          ],
+        })),
     }),
     {
       name: 'frontline-lxp-storage',

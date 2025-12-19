@@ -1,12 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useStore } from '../store'
 import { api } from '../api/client'
 import { getOrgLogo } from '../config'
 import { ProgressRing } from '../components/ProgressRing'
 import { TeamMemberCard } from '../components/TeamMemberCard'
+import { CreateAnnouncementModal } from '../components/announcements'
 
 export function ManagerHome() {
-  const { team, setTeam, teamStats, setTeamStats, setIsLoading } = useStore()
+  const { team, setTeam, teamStats, setTeamStats, setIsLoading, createAnnouncement } = useStore()
+  const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false)
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,6 +42,17 @@ export function ManagerHome() {
   const handleRemind = (memberId: number) => {
     console.log('Sending reminder to:', memberId)
     alert('Reminder sent! (Demo)')
+  }
+
+  const handleCreateAnnouncement = (data: {
+    title: string
+    body: string
+    imageUrl?: string
+    ctaText?: string
+    ctaUrl?: string
+  }) => {
+    createAnnouncement(data)
+    alert('Announcement sent to your team! (Demo)')
   }
 
   return (
@@ -172,7 +185,10 @@ export function ManagerHome() {
               </svg>
               <span className="font-bold text-sm relative">Full Report</span>
             </button>
-            <button className="card card-interactive bg-gradient-to-br from-[var(--color-accent)] to-[#B366E0] text-white p-4 text-center border-0 shadow-lg group relative overflow-hidden">
+            <button
+              onClick={() => setIsAnnouncementModalOpen(true)}
+              className="card card-interactive bg-gradient-to-br from-[var(--color-accent)] to-[#B366E0] text-white p-4 text-center border-0 shadow-lg group relative overflow-hidden"
+            >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
               <svg className="w-6 h-6 mx-auto mb-2 relative group-hover:scale-110 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
@@ -182,6 +198,13 @@ export function ManagerHome() {
           </div>
         </div>
       </div>
+
+      {/* Create Announcement Modal */}
+      <CreateAnnouncementModal
+        isOpen={isAnnouncementModalOpen}
+        onClose={() => setIsAnnouncementModalOpen(false)}
+        onSubmit={handleCreateAnnouncement}
+      />
     </div>
   )
 }
