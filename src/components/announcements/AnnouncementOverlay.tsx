@@ -102,7 +102,7 @@ export function AnnouncementOverlay() {
           <div className="flex justify-end mt-3">
             <button
               onClick={handleClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors cursor-pointer"
               aria-label="Close"
             >
               <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -131,7 +131,7 @@ export function AnnouncementOverlay() {
             </span>
             <button
               onClick={handleDismissAll}
-              className="text-white/60 hover:text-white transition-colors"
+              className="text-white/60 hover:text-white transition-colors cursor-pointer"
             >
               Dismiss all
             </button>

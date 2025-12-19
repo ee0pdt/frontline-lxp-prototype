@@ -32,7 +32,7 @@ export function NewAnnouncementsBanner({ count, onView, onDismiss }: NewAnnounce
         {/* View button */}
         <button
           onClick={onView}
-          className="px-4 py-2 bg-white text-[var(--color-primary)] font-bold text-sm rounded-xl hover:bg-white/90 active:scale-[0.98] transition-all shadow-md flex-shrink-0"
+          className="px-4 py-2 bg-white text-[var(--color-primary)] font-bold text-sm rounded-xl hover:bg-white/90 active:scale-[0.98] transition-all shadow-md flex-shrink-0 cursor-pointer"
         >
           View
         </button>
@@ -40,7 +40,7 @@ export function NewAnnouncementsBanner({ count, onView, onDismiss }: NewAnnounce
         {/* Dismiss X button */}
         <button
           onClick={onDismiss}
-          className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors flex-shrink-0"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors flex-shrink-0 cursor-pointer"
           aria-label="Dismiss"
         >
           <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
