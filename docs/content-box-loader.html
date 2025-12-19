@@ -149,12 +149,23 @@
     var link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = baseUrl + '/frontline-app.css' + cacheBuster;
+    link.onerror = function() {
+      console.error('[Frontline LXP] Failed to load CSS');
+    };
     document.head.appendChild(link);
 
-    // Load JS module
+    // Load JS module - crossorigin required for module scripts from different origins
     var script = document.createElement('script');
     script.type = 'module';
+    script.crossOrigin = 'anonymous';
     script.src = baseUrl + '/frontline-app.js' + cacheBuster;
+    script.onerror = function() {
+      console.error('[Frontline LXP] Failed to load JS module');
+      var loading = document.getElementById('frontline-loading');
+      if (loading) {
+        loading.innerHTML = '<p style="color: #FF4B4B; font-weight: 600;">Failed to load app. Please refresh.</p>';
+      }
+    };
     document.body.appendChild(script);
 
     console.log('[Frontline LXP] Loading assets with cache buster:', cacheBuster);
