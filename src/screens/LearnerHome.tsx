@@ -37,6 +37,22 @@ export function LearnerHome() {
 
   const overdueCount = mandatoryLearning.filter((c) => c.isOverdue).length
 
+  // Sort courses: overdue first, then due soon, then by due date
+  const sortedCourses = [...mandatoryLearning].sort((a, b) => {
+    // Overdue items first
+    if (a.isOverdue && !b.isOverdue) return -1
+    if (!a.isOverdue && b.isOverdue) return 1
+
+    // Then by due date (soonest first)
+    if (a.dueDate && b.dueDate) {
+      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    }
+    if (a.dueDate && !b.dueDate) return -1
+    if (!a.dueDate && b.dueDate) return 1
+
+    return 0
+  })
+
   return (
     <div className="flex-1 flex flex-col bg-[var(--surface-secondary)]">
       {/* Compact Header */}
@@ -92,7 +108,7 @@ export function LearnerHome() {
             </div>
 
             <div className="space-y-3">
-              {mandatoryLearning.length === 0 ? (
+              {sortedCourses.length === 0 ? (
                 <div className="card text-center py-8">
                   <span className="text-4xl mb-3 block">🎉</span>
                   <p className="font-bold text-[var(--text-primary)]">All caught up!</p>
@@ -101,7 +117,7 @@ export function LearnerHome() {
                   </p>
                 </div>
               ) : (
-                mandatoryLearning.map((course) => (
+                sortedCourses.map((course) => (
                   <CourseCard
                     key={course.id}
                     course={course}
