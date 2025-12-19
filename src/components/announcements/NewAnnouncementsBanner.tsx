@@ -6,48 +6,48 @@ interface NewAnnouncementsBannerProps {
 
 export function NewAnnouncementsBanner({ count, onView, onDismiss }: NewAnnouncementsBannerProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-fade-in">
-      <div className="relative bg-gradient-to-br from-[var(--color-accent)] via-[#9B5DE5] to-[var(--color-secondary)] p-8 rounded-3xl shadow-2xl max-w-xs mx-4 text-center animate-scale-in">
-        {/* Dismiss X button */}
-        <button
-          onClick={onDismiss}
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-          aria-label="Dismiss"
-        >
-          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+    <div className="relative bg-gradient-to-r from-[var(--color-accent)] via-[#9B5DE5] to-[var(--color-secondary)] p-4 rounded-2xl shadow-lg overflow-hidden">
+      {/* Decorative shimmer */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
 
-        {/* Megaphone/announcement icon */}
-        <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.34 3.94a.75.75 0 011.16.88l-2.33 4.2h5.67l-2.33-4.2a.75.75 0 011.16-.88L18 8.25h2.25a.75.75 0 01.75.75v6a.75.75 0 01-.75.75H18l-4.33 4.41a.75.75 0 01-1.16-.88l2.33-4.2H9.17l2.33 4.2a.75.75 0 01-1.16.88L6 15.75H3.75a.75.75 0 01-.75-.75v-6a.75.75 0 01.75-.75H6l4.34-4.31z" />
+      <div className="relative flex items-center gap-4">
+        {/* Icon */}
+        <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm">
+          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
           </svg>
         </div>
 
-        {/* Badge with count */}
-        <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-1.5 rounded-full mb-4">
-          <span className="w-6 h-6 bg-white text-[var(--color-accent)] rounded-full flex items-center justify-center text-sm font-bold">
-            {count}
-          </span>
-          <span className="text-white font-semibold text-sm">New</span>
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="text-white font-bold text-sm">New Announcements</span>
+            <span className="w-5 h-5 bg-white text-[var(--color-accent)] rounded-full flex items-center justify-center text-xs font-bold">
+              {count}
+            </span>
+          </div>
+          <p className="text-white/80 text-xs">
+            {count === 1 ? 'You have a new announcement' : `You have ${count} new announcements`}
+          </p>
         </div>
-
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-white mb-2">
-          New Announcements
-        </h2>
-        <p className="text-white/80 text-sm mb-6">
-          You have {count === 1 ? 'a new announcement' : `${count} new announcements`} to read
-        </p>
 
         {/* View button */}
         <button
           onClick={onView}
-          className="w-full py-3 px-6 bg-white text-[var(--color-accent)] font-bold rounded-xl hover:bg-white/90 active:scale-[0.98] transition-all shadow-lg"
+          className="px-4 py-2 bg-white text-[var(--color-accent)] font-bold text-sm rounded-xl hover:bg-white/90 active:scale-[0.98] transition-all shadow-md flex-shrink-0"
         >
-          View {count === 1 ? 'Announcement' : 'Announcements'}
+          View
+        </button>
+
+        {/* Dismiss X button */}
+        <button
+          onClick={onDismiss}
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors flex-shrink-0"
+          aria-label="Dismiss"
+        >
+          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
     </div>

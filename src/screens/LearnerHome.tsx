@@ -112,6 +112,15 @@ export function LearnerHome() {
       {/* Scrollable content area */}
       <div className="flex-1 overflow-y-auto bg-[var(--surface-secondary)]">
         <div className="px-4 py-4 pb-24 space-y-4 stagger-fade-in">
+          {/* New Announcements Banner */}
+          {showAnnouncementBanner && (
+            <NewAnnouncementsBanner
+              count={activeAnnouncements.length}
+              onView={openAnnouncementOverlay}
+              onDismiss={dismissAnnouncementBanner}
+            />
+          )}
+
           {/* Daily Goal Section */}
           <DailyGoal />
 
@@ -185,15 +194,6 @@ export function LearnerHome() {
           </button>
         </div>
       </div>
-
-      {/* New Announcements Banner */}
-      {showAnnouncementBanner && (
-        <NewAnnouncementsBanner
-          count={activeAnnouncements.length}
-          onView={openAnnouncementOverlay}
-          onDismiss={dismissAnnouncementBanner}
-        />
-      )}
 
       {/* Announcement Stories Overlay */}
       {isAnnouncementOverlayOpen && <AnnouncementOverlay />}
