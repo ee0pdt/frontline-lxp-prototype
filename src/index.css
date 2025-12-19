@@ -47,7 +47,7 @@
 
   /* Border radius */
   --radius-card: 16px;
-  --radius-button: 12px;
+  --radius-button: 980px;
   --radius-pill: 9999px;
 
   /* Shadows - refined for depth */
@@ -254,15 +254,13 @@ body {
 .btn-primary {
   background: linear-gradient(180deg, var(--color-button) 0%, var(--color-button-dark) 100%);
   color: var(--color-button-text);
-  font-weight: 700;
-  padding: 14px 24px;
+  font-weight: 600;
+  padding: 14px 28px;
   border-radius: var(--radius-button);
   border: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 14px;
+  font-size: 15px;
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-button), inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -340,15 +338,13 @@ body {
 .btn-urgent {
   background: linear-gradient(180deg, var(--color-danger) 0%, var(--color-danger-dark) 100%);
   color: #ffffff;
-  font-weight: 700;
-  padding: 14px 24px;
+  font-weight: 600;
+  padding: 14px 28px;
   border-radius: var(--radius-button);
   border: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 14px;
+  font-size: 15px;
   position: relative;
   overflow: hidden;
   box-shadow:
@@ -385,14 +381,12 @@ body {
   background-color: var(--surface-tertiary);
   color: var(--text-secondary);
   font-weight: 600;
-  padding: 14px 24px;
+  padding: 14px 28px;
   border-radius: var(--radius-button);
   border: 1px solid var(--border-primary);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 15px;
 }
 
 .btn-subtle:hover {
