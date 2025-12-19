@@ -46,8 +46,8 @@
   --font-family-display: 'Nunito', 'Poppins', system-ui, sans-serif;
 
   /* Border radius */
-  --radius-card: 16px;
-  --radius-button: 16px;
+  --radius-card: 24px;
+  --radius-button: 980px;
   --radius-pill: 9999px;
 
   /* Shadows - refined for depth */
