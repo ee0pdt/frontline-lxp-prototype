@@ -1,7 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { RouterProvider } from '@tanstack/react-router'
 import './index.css'
-import App from './App'
+import { router } from './routeTree.gen'
 import { initializeTheme } from './theme'
 
 // Initialize theme from window.theme (LXP Content Box)
@@ -13,7 +14,7 @@ const container = document.getElementById('frontline-app') || document.getElemen
 if (container) {
   createRoot(container).render(
     <StrictMode>
-      <App />
+      <RouterProvider router={router} />
     </StrictMode>,
   )
 }

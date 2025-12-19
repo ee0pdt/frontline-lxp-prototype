@@ -80,13 +80,7 @@ export interface TeamStats {
   completedThisWeek: number
 }
 
-export type Screen = 'home' | 'course-content'
-
 interface AppState {
-  // Navigation
-  currentScreen: Screen
-  setCurrentScreen: (screen: Screen) => void
-
   // Active Course (for course content view)
   activeCourse: Course | null
   setActiveCourse: (course: Course | null) => void
@@ -134,10 +128,6 @@ interface AppState {
 export const useStore = create<AppState>()(
   persist(
     (set) => ({
-      // Navigation
-      currentScreen: 'home',
-      setCurrentScreen: (screen) => set({ currentScreen: screen }),
-
       // Active Course
       activeCourse: null,
       setActiveCourse: (course) => set({ activeCourse: course }),

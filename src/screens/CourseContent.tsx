@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { useStore } from '../store'
 import type { CourseObject } from '../store'
 import { api } from '../api/client'
 
 export function CourseContent() {
+  const navigate = useNavigate()
   const {
     activeCourse,
     courseObjects,
     setCourseObjects,
-    setCurrentScreen,
     setIsLoading,
     addXP,
   } = useStore()
@@ -36,7 +37,7 @@ export function CourseContent() {
     if (activeObject) {
       setActiveObject(null)
     } else {
-      setCurrentScreen('home')
+      navigate({ to: '/' })
     }
   }
 

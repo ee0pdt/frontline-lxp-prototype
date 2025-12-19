@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { useStore } from '../store'
 import type { Course } from '../store'
 import { api } from '../api/client'
@@ -6,13 +7,13 @@ import { DailyGoal } from '../components/DailyGoal'
 import { CourseCard } from '../components/CourseCard'
 
 export function LearnerHome() {
+  const navigate = useNavigate()
   const {
     user,
     mandatoryLearning,
     setMandatoryLearning,
     setIsLoading,
     setActiveCourse,
-    setCurrentScreen,
   } = useStore()
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export function LearnerHome() {
 
   const handleContinue = (course: Course) => {
     setActiveCourse(course)
-    setCurrentScreen('course-content')
+    navigate({ to: '/course/$courseId', params: { courseId: String(course.id) } })
   }
 
   const overdueCount = mandatoryLearning.filter((c) => c.isOverdue).length
