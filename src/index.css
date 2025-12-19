@@ -405,7 +405,7 @@ body {
    ============================================ */
 
 .card {
-  background: var(--card-bg);
+  background-color: var(--card-bg);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   padding: 16px;
