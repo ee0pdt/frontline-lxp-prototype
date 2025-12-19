@@ -66,7 +66,7 @@ export function AnnouncementSlide({ announcement, onCtaClick }: AnnouncementSlid
               }
               onCtaClick?.()
             }}
-            className="mt-6 w-full py-3 px-6 bg-gradient-to-r from-[var(--color-accent)] to-[#B366E0] text-white font-bold rounded-xl active:scale-[0.98] transition-transform"
+            className="mt-6 w-full py-3 px-6 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white font-bold rounded-xl active:scale-[0.98] transition-transform"
           >
             {ctaText}
           </button>
