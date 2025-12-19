@@ -100,6 +100,10 @@
   --alert-warning-bg: #FFFBEB;
   --alert-warning-border: #FCD34D;
 
+  /* Overdue card styling */
+  --card-overdue-bg: rgba(239, 68, 68, 0.06);
+  --card-overdue-border: rgba(239, 68, 68, 0.25);
+
   /* Input backgrounds */
   --input-bg: #F7F7F7;
 
@@ -142,6 +146,10 @@
     --alert-danger-border: rgba(239, 68, 68, 0.3);
     --alert-warning-bg: rgba(245, 158, 11, 0.12);
     --alert-warning-border: rgba(245, 158, 11, 0.3);
+
+    /* Overdue card styling - dark mode */
+    --card-overdue-bg: rgba(239, 68, 68, 0.12);
+    --card-overdue-border: rgba(239, 68, 68, 0.35);
 
     --input-bg: #1E1E1E;
 
@@ -186,6 +194,10 @@
   --alert-danger-border: rgba(239, 68, 68, 0.3);
   --alert-warning-bg: rgba(245, 158, 11, 0.12);
   --alert-warning-border: rgba(245, 158, 11, 0.3);
+
+  /* Overdue card styling - dark mode */
+  --card-overdue-bg: rgba(239, 68, 68, 0.12);
+  --card-overdue-border: rgba(239, 68, 68, 0.35);
 
   --input-bg: #1E1E1E;
 
@@ -323,6 +335,76 @@ body {
   background-color: var(--border-primary);
 }
 
+/* Urgent button - for overdue items */
+.btn-urgent {
+  background: linear-gradient(180deg, var(--color-danger) 0%, var(--color-danger-dark) 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: var(--radius-button);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 2px 4px rgba(234, 43, 43, 0.25),
+    0 4px 12px rgba(234, 43, 43, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-urgent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.btn-urgent:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 8px 24px rgba(234, 43, 43, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-urgent:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 2px 8px rgba(234, 43, 43, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition-duration: 0.1s;
+}
+
+/* Subtle button - for non-urgent items */
+.btn-subtle {
+  background-color: var(--surface-tertiary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 14px 24px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border-primary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-subtle:hover {
+  background-color: var(--card-bg-hover);
+  border-color: var(--border-secondary);
+  color: var(--text-primary);
+}
+
+.btn-subtle:active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
 /* ============================================
    CARD STYLES
    ============================================ */
@@ -361,6 +443,27 @@ body {
 .card-interactive:active {
   transform: translateY(0) scale(0.98);
   transition-duration: 0.1s;
+}
+
+/* Overdue card variant - urgent visual treatment */
+.card-overdue {
+  background: linear-gradient(
+    135deg,
+    var(--card-overdue-bg) 0%,
+    var(--card-bg) 60%
+  );
+  border-color: var(--card-overdue-border);
+  box-shadow:
+    0 0 0 1px var(--card-overdue-border),
+    0 4px 12px rgba(239, 68, 68, 0.1);
+}
+
+.card-overdue::before {
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.03) 0%,
+    transparent 50%
+  );
 }
 
 /* ============================================

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 import { initializeTheme } from './theme'
+import { QueryProvider } from './providers/QueryProvider'
 
 // Initialize theme from window.theme (LXP Content Box)
 initializeTheme()
@@ -13,7 +14,9 @@ const container = document.getElementById('frontline-app') || document.getElemen
 if (container) {
   createRoot(container).render(
     <StrictMode>
-      <App />
+      <QueryProvider>
+        <App />
+      </QueryProvider>
     </StrictMode>,
   )
 }
