@@ -62,7 +62,7 @@ export function ManagerHome() {
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto bg-[var(--surface-secondary)]">
-        <div className="px-4 py-4 pb-24 space-y-4">
+        <div className="px-4 py-4 pb-24 space-y-4 stagger-fade-in">
           {/* Team Stats Summary */}
           <div className="card flex items-center gap-4 p-4">
             <ProgressRing
@@ -154,17 +154,19 @@ export function ManagerHome() {
 
           {/* Quick Actions */}
           <div className="grid grid-cols-2 gap-3">
-            <button className="card card-interactive bg-[var(--color-secondary)] text-white p-4 text-center border-0 shadow-lg">
-              <svg className="w-6 h-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <button className="card card-interactive bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-secondary-dark)] text-white p-4 text-center border-0 shadow-lg group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+              <svg className="w-6 h-6 mx-auto mb-2 relative group-hover:scale-110 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
-              <span className="font-bold text-sm">Full Report</span>
+              <span className="font-bold text-sm relative">Full Report</span>
             </button>
-            <button className="card card-interactive bg-[var(--color-accent)] text-white p-4 text-center border-0 shadow-lg">
-              <svg className="w-6 h-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <button className="card card-interactive bg-gradient-to-br from-[var(--color-accent)] to-[#B366E0] text-white p-4 text-center border-0 shadow-lg group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+              <svg className="w-6 h-6 mx-auto mb-2 relative group-hover:scale-110 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
               </svg>
-              <span className="font-bold text-sm">Announce</span>
+              <span className="font-bold text-sm relative">Announce</span>
             </button>
           </div>
         </div>

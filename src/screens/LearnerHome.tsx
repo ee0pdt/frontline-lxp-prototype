@@ -59,7 +59,7 @@ export function LearnerHome() {
 
       {/* Scrollable content area */}
       <div className="flex-1 overflow-y-auto bg-[var(--surface-secondary)]">
-        <div className="px-4 py-4 pb-24 space-y-4">
+        <div className="px-4 py-4 pb-24 space-y-4 stagger-fade-in">
           {/* Daily Goal Section */}
           <DailyGoal />
 
@@ -113,18 +113,20 @@ export function LearnerHome() {
           </div>
 
           {/* Quick action */}
-          <button className="w-full card-interactive card bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white p-4 text-left border-0 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <button className="w-full card-interactive card bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-primary-light)] text-white p-4 text-left border-0 shadow-lg overflow-hidden relative group">
+            {/* Decorative gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+            <div className="flex items-center gap-4 relative">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 backdrop-blur-sm shadow-inner">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <div className="flex-1">
                 <h3 className="font-bold text-base">Quick Boost</h3>
-                <p className="text-sm opacity-80">Earn 10 XP with a 2-min micro-lesson</p>
+                <p className="text-sm opacity-90">Earn 10 XP with a 2-min micro-lesson</p>
               </div>
-              <svg className="w-5 h-5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-5 h-5 opacity-70 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </div>

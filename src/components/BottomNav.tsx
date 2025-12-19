@@ -76,7 +76,7 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
   ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-[var(--nav-bg)] border-t border-[var(--nav-border)] safe-bottom z-40">
+    <nav className="bottom-nav-container bg-[var(--nav-bg)]/95 backdrop-blur-md border-t border-[var(--nav-border)] safe-bottom shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
       <div className="flex justify-around items-center h-16 px-2">
         {navItems.map((item) => {
           const isActive = active === item.id
@@ -84,16 +84,20 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
             <button
               key={item.id}
               onClick={() => handleClick(item.id)}
-              className={`flex flex-col items-center justify-center flex-1 h-full gap-1 transition-all duration-200 rounded-xl mx-0.5 ${
+              className={`flex flex-col items-center justify-center flex-1 h-full gap-1 transition-all duration-300 rounded-xl mx-0.5 relative ${
                 isActive
                   ? 'text-[var(--color-primary)]'
-                  : 'text-[var(--nav-text)] active:bg-[var(--surface-tertiary)]'
+                  : 'text-[var(--nav-text)] hover:text-[var(--text-secondary)] active:bg-[var(--surface-tertiary)]'
               }`}
             >
-              <span className={`transition-transform duration-200 ${isActive ? 'scale-110' : ''}`}>
+              {/* Active indicator dot */}
+              {isActive && (
+                <span className="absolute top-1.5 w-1 h-1 rounded-full bg-[var(--color-primary)] animate-[pulse-subtle_2s_ease-in-out_infinite]" />
+              )}
+              <span className={`transition-all duration-300 ease-out ${isActive ? 'scale-110 -translate-y-0.5' : 'scale-100'}`}>
                 {isActive ? item.activeIcon : item.icon}
               </span>
-              <span className={`text-[11px] font-semibold ${isActive ? 'text-[var(--color-primary)]' : ''}`}>
+              <span className={`text-[11px] font-semibold transition-all duration-300 ${isActive ? 'text-[var(--color-primary)] font-bold' : ''}`}>
                 {item.label}
               </span>
             </button>
