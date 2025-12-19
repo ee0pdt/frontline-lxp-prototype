@@ -34,7 +34,7 @@ export interface Course {
   dueDate?: string
   isOverdue?: boolean
   estimatedMinutes?: number
-  type: 'mandatory' | 'recommended' | 'recent'
+  type: 'mandatory' | 'recommended' | 'recent' | 'explore'
   levelId?: number
 }
 

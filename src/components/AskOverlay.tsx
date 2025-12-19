@@ -1,34 +1,60 @@
 import { useState, useRef, useEffect } from 'react'
-import { useStore } from '../store'
+import { useStore, type Course } from '../store'
+import { api } from '../api/client'
 
 interface Message {
   id: number
   role: 'user' | 'assistant'
   content: string
+  linkedCourse?: Course
 }
 
-const MOCK_RESPONSES: Record<string, string> = {
-  croissant: 'Croissants should be displayed with the curved side facing up, arranged in neat rows with the points alternating left and right. Place them on the middle shelf at eye level for maximum visibility. Check freshness every 2 hours during peak times.',
-  bread: 'Fresh bread should be placed in wicker baskets or on wooden display boards. Arrange loaves at a slight angle to show the crust. Sliced bread goes on the shelf behind whole loaves. Rotate stock every 4 hours.',
-  coffee: 'For coffee machine cleaning: 1) Run a rinse cycle every 2 hours, 2) Deep clean the steam wand after each milk-based drink, 3) Empty and clean drip trays when half full, 4) Full descale weekly on Sunday evenings.',
-  spill: 'For spills: 1) Place wet floor signs immediately, 2) Use the spill kit from aisle 3 back room, 3) Clean from outside edge inward, 4) Ensure floor is completely dry before removing signs, 5) Log the incident in the safety book.',
-  default: "I can help you find information about store procedures, product placement, health & safety, and more. Try asking about specific products like 'croissants' or 'bread', or topics like 'coffee machine cleaning' or 'spill procedures'.",
+interface MockResponse {
+  text: string
+  courseId?: number
 }
 
-function getResponse(question: string): string {
+const MOCK_RESPONSES: Record<string, MockResponse> = {
+  croissant: {
+    text: 'Croissants should be displayed with the curved side facing up, arranged in neat rows with the points alternating left and right. Place them on the middle shelf at eye level for maximum visibility. Check freshness every 2 hours during peak times.',
+    courseId: 15600,
+  },
+  bread: {
+    text: 'Fresh bread should be placed in wicker baskets or on wooden display boards. Arrange loaves at a slight angle to show the crust. Sliced bread goes on the shelf behind whole loaves. Rotate stock every 4 hours.',
+    courseId: 15600,
+  },
+  coffee: {
+    text: 'For coffee machine cleaning: 1) Run a rinse cycle every 2 hours, 2) Deep clean the steam wand after each milk-based drink, 3) Empty and clean drip trays when half full, 4) Full descale weekly on Sunday evenings.',
+    courseId: 15601,
+  },
+  spill: {
+    text: 'For spills: 1) Place wet floor signs immediately, 2) Use the spill kit from aisle 3 back room, 3) Clean from outside edge inward, 4) Ensure floor is completely dry before removing signs, 5) Log the incident in the safety book.',
+    courseId: 15603,
+  },
+  default: {
+    text: "I can help you find information about store procedures, product placement, health & safety, and more. Try asking about specific products like 'croissants' or 'bread', or topics like 'coffee machine cleaning' or 'spill procedures'.",
+  },
+}
+
+async function getResponse(question: string): Promise<{ text: string; linkedCourse?: Course }> {
   const lowerQuestion = question.toLowerCase()
 
   for (const [keyword, response] of Object.entries(MOCK_RESPONSES)) {
     if (keyword !== 'default' && lowerQuestion.includes(keyword)) {
-      return response
+      let linkedCourse: Course | undefined
+      if (response.courseId) {
+        const courses = await api.getExploreCourses()
+        linkedCourse = courses.find(c => c.id === response.courseId)
+      }
+      return { text: response.text, linkedCourse }
     }
   }
 
-  return MOCK_RESPONSES.default
+  return { text: MOCK_RESPONSES.default.text }
 }
 
 export function AskOverlay() {
-  const { closeAskOverlay } = useStore()
+  const { closeAskOverlay, setActiveCourse, setCurrentScreen } = useStore()
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
@@ -60,14 +86,23 @@ export function AskOverlay() {
     // Simulate typing delay
     await new Promise((resolve) => setTimeout(resolve, 800 + Math.random() * 400))
 
+    const response = await getResponse(userMessage.content)
+
     const assistantMessage: Message = {
       id: Date.now() + 1,
       role: 'assistant',
-      content: getResponse(userMessage.content),
+      content: response.text,
+      linkedCourse: response.linkedCourse,
     }
 
     setMessages((prev) => [...prev, assistantMessage])
     setIsTyping(false)
+  }
+
+  const handleOpenCourse = (course: Course) => {
+    setActiveCourse(course)
+    setCurrentScreen('course-content')
+    closeAskOverlay()
   }
 
   const hasMessages = messages.length > 0
@@ -175,6 +210,17 @@ export function AskOverlay() {
                       }`}
                     >
                       <p className="text-sm leading-relaxed">{message.content}</p>
+                      {message.linkedCourse && (
+                        <button
+                          onClick={() => handleOpenCourse(message.linkedCourse!)}
+                          className="mt-3 flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                        >
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                          </svg>
+                          Learn more: {message.linkedCourse.title}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}

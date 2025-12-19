@@ -85,6 +85,15 @@ class ApiClient {
     return (data.items || []).map(transformCourse)
   }
 
+  async getExploreCourses(): Promise<Course[]> {
+    if (isDev) return mockData.exploreCourses
+
+    const data = await this.fetch<{ items: unknown[] }>(
+      `/learning-activities?limit=20&category=all`
+    )
+    return (data.items || []).map(transformCourse)
+  }
+
   // Badges
   async getBadges(): Promise<Badge[]> {
     if (isDev) return mockData.badges
@@ -388,6 +397,44 @@ const mockData = {
       progress: 0,
       estimatedMinutes: 18,
       type: 'recommended' as const,
+    },
+  ],
+  exploreCourses: [
+    {
+      id: 15600,
+      title: 'Bakery Display Standards',
+      description: 'Master the art of bakery presentation. Learn proper display techniques for croissants, bread, and pastries to maximise freshness and appeal.',
+      image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop',
+      progress: 0,
+      estimatedMinutes: 15,
+      type: 'explore' as const,
+    },
+    {
+      id: 15601,
+      title: 'Coffee Excellence',
+      description: 'From bean to cup - master coffee preparation, machine maintenance, and creating the perfect customer experience at the coffee counter.',
+      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop',
+      progress: 0,
+      estimatedMinutes: 20,
+      type: 'explore' as const,
+    },
+    {
+      id: 15602,
+      title: 'Fresh Produce Handling',
+      description: 'Best practices for handling, storing, and displaying fresh fruits and vegetables to maintain quality and reduce waste.',
+      image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop',
+      progress: 0,
+      estimatedMinutes: 12,
+      type: 'explore' as const,
+    },
+    {
+      id: 15603,
+      title: 'Store Safety Essentials',
+      description: 'Essential safety procedures including spill management, emergency protocols, and maintaining a safe environment for customers and colleagues.',
+      image: 'https://images.unsplash.com/photo-1582139329536-e7284fece509?w=400&h=300&fit=crop',
+      progress: 0,
+      estimatedMinutes: 25,
+      type: 'explore' as const,
     },
   ],
   badges: [
