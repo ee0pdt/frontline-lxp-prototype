@@ -95,7 +95,7 @@ export interface TeamStats {
   completedThisWeek: number
 }
 
-export type Screen = 'home' | 'course-content'
+export type Screen = 'home' | 'explore' | 'progress' | 'me' | 'course-content'
 
 interface AppState {
   // Navigation
@@ -158,6 +158,11 @@ interface AppState {
   closeAnnouncementOverlay: () => void
   setAnnouncementIndex: (index: number) => void
   createAnnouncement: (announcement: Omit<Announcement, 'id' | 'createdAt' | 'createdBy'>) => void
+
+  // Ask Overlay
+  isAskOverlayOpen: boolean
+  openAskOverlay: () => void
+  closeAskOverlay: () => void
 }
 
 export const useStore = create<AppState>()(
@@ -276,6 +281,11 @@ export const useStore = create<AppState>()(
             ...state.announcements,
           ],
         })),
+
+      // Ask Overlay
+      isAskOverlayOpen: false,
+      openAskOverlay: () => set({ isAskOverlayOpen: true }),
+      closeAskOverlay: () => set({ isAskOverlayOpen: false }),
     }),
     {
       name: 'frontline-lxp-storage',

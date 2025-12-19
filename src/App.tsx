@@ -4,12 +4,16 @@ import { api } from './api/client'
 import { isDev, getOrgLogo } from './config'
 import { ModeSwitch } from './components/ModeSwitch'
 import { BottomNav } from './components/BottomNav'
+import { AskOverlay } from './components/AskOverlay'
 import { LearnerHome } from './screens/LearnerHome'
 import { ManagerHome } from './screens/ManagerHome'
 import { CourseContent } from './screens/CourseContent'
+import { ExploreScreen } from './screens/ExploreScreen'
+import { ProgressScreen } from './screens/ProgressScreen'
+import { MeScreen } from './screens/MeScreen'
 
 function App() {
-  const { mode, currentScreen, setUser, isLoading } = useStore()
+  const { mode, currentScreen, setUser, isLoading, isAskOverlayOpen } = useStore()
   const [showSplash, setShowSplash] = useState(isDev)
 
   // Hide splash screen after delay (dev mode only)
@@ -56,7 +60,7 @@ function App() {
     <div className="app-shell">
       <div className="app-content">
         {/* Mode Switcher (only for managers, hidden during course content) */}
-        {currentScreen === 'home' && <ModeSwitch />}
+        {currentScreen !== 'course-content' && <ModeSwitch />}
 
         {/* Loading overlay */}
         {isLoading && (
@@ -72,6 +76,12 @@ function App() {
         <main className="flex-1 flex flex-col">
           {currentScreen === 'course-content' ? (
             <CourseContent />
+          ) : currentScreen === 'explore' ? (
+            <ExploreScreen />
+          ) : currentScreen === 'progress' ? (
+            <ProgressScreen />
+          ) : currentScreen === 'me' ? (
+            <MeScreen />
           ) : mode === 'learner' ? (
             <LearnerHome />
           ) : (
@@ -80,7 +90,10 @@ function App() {
         </main>
 
         {/* Bottom Navigation - hide when viewing course content */}
-        {currentScreen === 'home' && <BottomNav />}
+        {currentScreen !== 'course-content' && <BottomNav />}
+
+        {/* Ask Overlay */}
+        {isAskOverlayOpen && <AskOverlay />}
       </div>
     </div>
   )

@@ -1,21 +1,15 @@
-import { useState, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import { useStore, type Screen } from '../store'
 
-type NavItem = 'home' | 'learn' | 'achievements' | 'profile'
+type NavScreen = Exclude<Screen, 'course-content'>
 
-interface BottomNavProps {
-  activeItem?: NavItem
-  onNavigate?: (item: NavItem) => void
-}
+export function BottomNav() {
+  const { currentScreen, setCurrentScreen } = useStore()
 
-export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
-  const [active, setActive] = useState<NavItem>(activeItem)
+  // Map current screen to nav item (course-content shows home as active)
+  const activeNav: NavScreen = currentScreen === 'course-content' ? 'home' : currentScreen
 
-  const handleClick = (item: NavItem) => {
-    setActive(item)
-    onNavigate?.(item)
-  }
-
-  const navItems: { id: NavItem; label: string; icon: ReactNode; activeIcon: ReactNode }[] = [
+  const navItems: { id: NavScreen; label: string; icon: ReactNode; activeIcon: ReactNode }[] = [
     {
       id: 'home',
       label: 'Home',
@@ -32,22 +26,22 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
       ),
     },
     {
-      id: 'learn',
-      label: 'Learn',
+      id: 'explore',
+      label: 'Explore',
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
         </svg>
       ),
       activeIcon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
+          <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clipRule="evenodd" />
         </svg>
       ),
     },
     {
-      id: 'achievements',
-      label: 'Awards',
+      id: 'progress',
+      label: 'Progress',
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0" />
@@ -60,8 +54,8 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
       ),
     },
     {
-      id: 'profile',
-      label: 'Profile',
+      id: 'me',
+      label: 'Me',
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -79,11 +73,11 @@ export function BottomNav({ activeItem = 'home', onNavigate }: BottomNavProps) {
     <nav className="bottom-nav-container bg-[var(--nav-bg)]/95 backdrop-blur-md border-t border-[var(--nav-border)] safe-bottom shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
       <div className="flex justify-around items-center h-16 px-2">
         {navItems.map((item) => {
-          const isActive = active === item.id
+          const isActive = activeNav === item.id
           return (
             <button
               key={item.id}
-              onClick={() => handleClick(item.id)}
+              onClick={() => setCurrentScreen(item.id)}
               className={`flex flex-col items-center justify-center flex-1 h-full gap-1 transition-all duration-300 rounded-xl mx-0.5 relative ${
                 isActive
                   ? 'text-[var(--color-primary)]'

@@ -22,6 +22,7 @@ export function LearnerHome() {
     setAnnouncements,
     openAnnouncementOverlay,
     dismissAnnouncementBanner,
+    openAskOverlay,
   } = useStore()
 
   useEffect(() => {
@@ -56,23 +57,25 @@ export function LearnerHome() {
     setCurrentScreen('course-content')
   }
 
-  const overdueCount = mandatoryLearning.filter((c) => c.isOverdue).length
+  const overdueCount = mandatoryLearning.filter((c) => c.isOverdue && c.progress < 100).length
 
-  // Sort courses: overdue first, then due soon, then by due date
-  const sortedCourses = [...mandatoryLearning].sort((a, b) => {
-    // Overdue items first
-    if (a.isOverdue && !b.isOverdue) return -1
-    if (!a.isOverdue && b.isOverdue) return 1
+  // Filter out completed courses and sort: overdue first, then due soon, then by due date
+  const sortedCourses = [...mandatoryLearning]
+    .filter((c) => c.progress < 100)
+    .sort((a, b) => {
+      // Overdue items first
+      if (a.isOverdue && !b.isOverdue) return -1
+      if (!a.isOverdue && b.isOverdue) return 1
 
-    // Then by due date (soonest first)
-    if (a.dueDate && b.dueDate) {
-      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-    }
-    if (a.dueDate && !b.dueDate) return -1
-    if (!a.dueDate && b.dueDate) return 1
+      // Then by due date (soonest first)
+      if (a.dueDate && b.dueDate) {
+        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+      }
+      if (a.dueDate && !b.dueDate) return -1
+      if (!a.dueDate && b.dueDate) return 1
 
-    return 0
-  })
+      return 0
+    })
 
   return (
     <div className="flex-1 flex flex-col bg-[var(--surface-secondary)]">
@@ -102,10 +105,15 @@ export function LearnerHome() {
               </p>
             </div>
           </div>
-          {/* User avatar */}
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] flex items-center justify-center text-white font-bold text-sm">
-            {user.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-          </div>
+          {/* Ask button */}
+          <button
+            onClick={openAskOverlay}
+            className="w-10 h-10 rounded-full bg-[var(--color-primary)] flex items-center justify-center text-white shadow-md hover:shadow-lg transition-shadow"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+            </svg>
+          </button>
         </div>
       </div>
 
