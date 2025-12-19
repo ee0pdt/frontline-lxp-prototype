@@ -120,6 +120,27 @@
 </div>
 
 <script>
+  // Nuke all existing CSS from the LXP to prevent style conflicts
+  (function() {
+    // Remove all external stylesheets
+    var stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+    stylesheets.forEach(function(sheet) {
+      sheet.parentNode.removeChild(sheet);
+    });
+
+    // Remove all inline style elements (except ours inside #frontline-app)
+    var styles = document.querySelectorAll('style');
+    styles.forEach(function(style) {
+      if (!style.closest('#frontline-app') && !style.parentNode.closest('#frontline-app')) {
+        style.parentNode.removeChild(style);
+      }
+    });
+
+    console.log('[Frontline LXP] Removed ' + stylesheets.length + ' stylesheets and ' + styles.length + ' style elements');
+  })();
+</script>
+
+<script>
   // Pass LXP context to the prototype
   window.FRONTLINE_CONFIG = {
     userId: window.USER_ID,
